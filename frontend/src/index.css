@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+.rain-drop {
+  position: absolute;
+  top: -20px;
+  width: 2px;
+  height: 80px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0.7)
+  );
+
+  animation: rain linear infinite;
+
+  opacity: 0.5;
+}
+
+@keyframes rain {
+  from {
+    transform: translateY(-100px);
+  }
+
+  to {
+    transform: translateY(120vh);
+  }
+}
