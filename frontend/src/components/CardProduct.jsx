@@ -1,11 +1,12 @@
 
 
 const CardProduct = ({ producto, agregarAlCarrito }) => {
+  console.log(producto);
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition duration-300">
 
       <img
-        src={producto.imagen}
+        src={producto.imagen_url}
         alt={producto.nombre}
         className="w-full h-48 object-cover"
       />

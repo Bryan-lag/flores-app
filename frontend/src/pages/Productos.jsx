@@ -1,8 +1,11 @@
-import { flores } from "../data/flores";
+import { obtenerProductos } from "../api/productos";
 import CardProduct from "../components/CardProduct";
 import { useCarrito } from "../context/CarritoContext";
+import {useEffect, useState} from "react";
 
 const Productos = () => {
+
+  const [productos, setProductos] = useState([]);
 
   const {
     carrito,
@@ -12,6 +15,19 @@ const Productos = () => {
     decrementarCantidad,
     total,
   } = useCarrito();
+
+  useEffect(() => {
+    async function cargarProductos() {
+      try {
+        const data = await obtenerProductos();
+        setProductos(data);
+      }
+      catch (error) {
+        console.error("Error al obtener los productos", error)
+      }
+    }
+    cargarProductos();
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
@@ -50,10 +66,10 @@ const Productos = () => {
       {/* GRID DE PRODUCTOS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
-        {flores.map((flor) => (
+        {productos.map((producto) => (
           <CardProduct
-            key={flor.id}
-            producto={flor}
+            key={producto.id}
+            producto={producto}
             agregarAlCarrito={agregarAlCarrito}
           />
         ))}
