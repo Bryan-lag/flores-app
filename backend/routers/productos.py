@@ -17,6 +17,23 @@ router = APIRouter(
     tags=["productos"]
 )
 
+def obtener_producto_o_404(
+        producto_id: int,
+        session: Session
+    ):
+        producto = session.get(
+            Producto,
+            producto_id
+        )
+
+        if not producto:
+            raise HTTPException(
+                status_code=404,
+                detail="Producto no encontrado"
+            )
+
+        return producto
+
 
 # GET todos los productos
 @router.get("/", response_model=list[ProductoRead])
@@ -24,6 +41,10 @@ def listar_productos(
     categoria: Optional[str] = Query(None),
     session: Session = Depends(get_session)
 ):
+    """"
+    Lista todos los productos de la base de datos.
+    
+    """
     query = select(Producto)
 
     if categoria:
@@ -42,18 +63,11 @@ def obtener_producto(
     producto_id: int,
     session: Session = Depends(get_session)
 ):
-    producto = session.get(
-        Producto,
-        producto_id
+    producto = obtener_producto_o_404(
+        producto_id,
+        session 
     )
-
-    if not producto:
-        raise HTTPException(
-            status_code=404,
-            detail="Producto no encontrado"
-        )
-
-    return producto
+    
 
 
 # POST crear producto
@@ -66,13 +80,12 @@ def crear_producto(
     producto: ProductoCreate,
     session: Session = Depends(get_session)
 ):
+    """
+    Crea un nuevo producto en la base de datos.
+    
+    """
     nuevo_producto = Producto(
-        nombre=producto.nombre,
-        descripcion=producto.descripcion,
-        precio=producto.precio,
-        categoria=producto.categoria,
-        imagen_url=producto.imagen_url,
-        stock=producto.stock,
+        **producto.model_dump()
     )
 
     session.add(nuevo_producto)
@@ -82,6 +95,7 @@ def crear_producto(
     return nuevo_producto
 
 
+
 # PUT actualizar producto
 @router.put("/{producto_id}", response_model=ProductoRead)
 def actualizar_producto(
@@ -89,16 +103,14 @@ def actualizar_producto(
     datos: ProductoUpdate,
     session: Session = Depends(get_session)
 ):
-    producto = session.get(
-        Producto,
-        producto_id
+    """"
+    Actualiza un producto existente en la base de datos.
+     
+    """
+    producto = obtener_producto_o_404(
+        producto_id,
+        session
     )
-
-    if not producto:
-        raise HTTPException(
-            status_code=404,
-            detail="Producto no encontrado"
-        )
 
     datos_actualizados = datos.model_dump(
         exclude_unset=True
@@ -119,21 +131,19 @@ def actualizar_producto(
 
 
 # DELETE eliminar producto
-@router.delete("/{producto_id}")
+@router.delete("/{producto_id}", status_code=status.HTTP_204_NO_CONTENT)
 def eliminar_producto(
     producto_id: int,
     session: Session = Depends(get_session)
 ):
-    producto = session.get(
-        Producto,
-        producto_id
+    """
+    Elimina un producto de la base de datos.
+    
+    """
+    producto = obtener_producto_o_404(
+        producto_id,
+        session
     )
-
-    if not producto:
-        raise HTTPException(
-            status_code=404,
-            detail="Producto no encontrado"
-        )
 
     session.delete(producto)
     session.commit()
