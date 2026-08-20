@@ -6,7 +6,7 @@ const CardArreglos = ({ producto, agregarAlCarrito }) => {
     <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:scale-105 hover:shadow-xl transition duration-300">
 
       <img
-        src={producto.imagen}
+        src={producto.imagen_url}
         alt={producto.nombre}
         className="w-full h-72 object-cover"
       />

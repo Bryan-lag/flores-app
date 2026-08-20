@@ -1,9 +1,26 @@
-import { eventos } from "../../data/eventos";
+import { useEffect, useState } from "react";
+import { obtenerProductos } from "../../api/productos";
 import { Link } from "react-router-dom";
 
 const EventosPreview = () => {
 
-     const destacado = eventos[0];
+     const [destacado, setDestacado] = useState(null);
+
+     useEffect(() => {
+
+          obtenerProductos("Eventos")
+               .then((productos) => {
+                    setDestacado(productos[0]);
+               })
+               .catch((error) => {
+                    console.error("Error al obtener eventos:", error);
+               });
+
+     }, []);
+
+     if (!destacado) {
+          return null;
+     }
 
      return (
 
@@ -13,7 +30,7 @@ const EventosPreview = () => {
 
                     {/* IMAGEN */}
                     <img
-                         src={destacado.imagen}
+                         src={destacado.imagen_url}
                          alt={destacado.nombre}
                          className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                     />

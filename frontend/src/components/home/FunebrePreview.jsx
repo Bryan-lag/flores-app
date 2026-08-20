@@ -1,19 +1,36 @@
-import { funebre } from "../../data/funebre";
+import { obtenerProductos } from "../../api/productos";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const FunebresPreview = () => {
 
-     const destacado = funebre[0];
+     const [destacado, setDestacado] = useState(null);
+          useEffect(() => {
+
+     obtenerProductos("Funebres")
+          .then((productos) => {
+               console.log("FUNEBRES DESDE API:", productos);
+               setDestacado(productos[0]);
+          })
+          .catch((error) => {
+               console.error("ERROR FUNEBRES:", error);
+          });
+
+     }, []);
+
+     if (!destacado) {
+      return <p>Cargando Funebres...</p>;
+     }
 
      return (
 
           <section className="w-full">
 
-               <div className="relative group overflow-hidden rounded-3xl h-[400px] shadow-xl">
+               <div className="relative group overflow-hidden rounded-3xl h-100 shadow-xl">
 
                     {/* IMAGEN */}
                     <img
-                         src={destacado.imagen}
+                         src={destacado.imagen_url}
                          alt={destacado.nombre}
                          className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                     />

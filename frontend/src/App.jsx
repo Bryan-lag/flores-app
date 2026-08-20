@@ -18,6 +18,7 @@ function App() {
         <Route path="/funebre" element={<Funebre />} />
         <Route path="/arreglos" element={<Arreglos />} />
         <Route path="/eventos" element={<Eventos />} />
+        <Route path="/flor-carrusel" element={<FlorCarrusel />} />
       </Routes>
     </>
   );

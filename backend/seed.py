@@ -111,8 +111,115 @@ productos = [
         "categoria": "Arreglos",
         "imagen_url": "https://images.pexels.com/photos/18532008/pexels-photo-18532008.jpeg",
         "stock": 15
-    }
+    },
+    
+    
+    # ======================
+    # FUNEBRES
+    # ======================
 
+    {
+        "nombre": "Corona Roja",
+        "descripcion": "Elegante corona floral roja para honrar y recordar a un ser querido.",
+        "precio": 250,
+        "categoria": "Funebres",
+        "imagen_url": "https://images.pexels.com/photos/33327027/pexels-photo-33327027.jpeg",
+        "stock": 10
+    },
+    {
+        "nombre": "Corona Tulipanes",
+        "descripcion": "Hermosa corona de tulipanes para expresar respeto y condolencias.",
+        "precio": 300,
+        "categoria": "Funebres",
+        "imagen_url": "https://images.pexels.com/photos/31624870/pexels-photo-31624870.jpeg",
+        "stock": 8
+    },
+    {
+        "nombre": "Corona Mixta",
+        "descripcion": "Corona floral mixta en tonos elegantes para ocasiones de condolencia.",
+        "precio": 200,
+        "categoria": "Funebres",
+        "imagen_url": "https://media.gettyimages.com/id/1204837391/es/foto/wreath-of-white-flowers-against-a-stone-wall.jpg?s=612x612&w=0&k=20&c=p4ffqr6ELkk4O23LnG9HpDGygiIe00QDaoN3r1qoL7k=",
+        "stock": 12
+    },
+    {
+        "nombre": "Corona Lirios",
+        "descripcion": "Corona de lirios blancos de elegante presentación para expresar condolencias.",
+        "precio": 200,
+        "categoria": "Funebres",
+        "imagen_url": "https://media.gettyimages.com/id/2149387037/es/foto/sandalwood-flowers-set-in-a-tray-as-a-symbol-of-mourning-for-the-deceased-is-a-local-tradition.jpg?s=612x612&w=0&k=20&c=0WufCZS-rPt6VwSXQtsqrmkZOOM2E4uQXXfUSJfz5Ck=",
+        "stock": 7
+    },
+    {
+        "nombre": "Corona Blanca",
+        "descripcion": "Corona floral blanca de estilo sobrio para homenajes y servicios funerarios.",
+        "precio": 200,
+        "categoria": "Funebres",
+        "imagen_url": "https://media.gettyimages.com/id/sb10068629l-001/es/foto/flower-wreath-on-stand-on-white-background.jpg?s=612x612&w=0&k=20&c=PFh3QzjHxnH0rmuUSBa6j0IojK6K8LeLuOOHNY8qo68=",
+        "stock": 9
+    },
+    {
+        "nombre": "Corona Girasoles",
+        "descripcion": "Hermosa corona de girasoles naturales para rendir homenaje a un ser querido.",
+        "precio": 200,
+        "categoria": "Funebres",
+        "imagen_url": "https://media.gettyimages.com/id/1815933186/es/foto/funeral-wreath-or-funeral-flowers-along-with-a-set-of-offerings-to-be-placed-at-the-cremation.jpg?s=612x612&w=0&k=20&c=-xX5-bYbDsbvIavSD2i7l5BphJoo1DsLDQlCzWpFxWU=",
+        "stock": 15
+    },
+    
+    # ======================
+    # EVENTOS
+    # ======================
+
+
+    {
+        "nombre": "Decoración Floral Romántica",
+        "descripcion": "Composición de rosas rojas ideal para bodas, aniversarios y celebraciones románticas.",
+        "precio": 250,
+        "categoria": "Eventos",
+        "imagen_url": "https://images.pexels.com/photos/14457438/pexels-photo-14457438.jpeg",
+        "stock": 15
+    },
+    {
+        "nombre": "Decoración de Tulipanes",
+        "descripcion": "Elegante composición de tulipanes para decorar bodas, recepciones y eventos especiales.",
+        "precio": 300,
+        "categoria": "Eventos",
+        "imagen_url": "https://images.pexels.com/photos/1682473/pexels-photo-1682473.jpeg",
+        "stock": 4
+    },
+    {
+        "nombre": "Centro Floral Mixto",
+        "descripcion": "Arreglo de flores variadas diseñado para mesas y espacios de celebraciones especiales.",
+        "precio": 200,
+        "categoria": "Eventos",
+        "imagen_url": "https://images.pexels.com/photos/11474201/pexels-photo-11474201.jpeg",
+        "stock": 6
+    },
+    {
+        "nombre": "Decoración Floral con Lirios",
+        "descripcion": "Elegante composición de lirios para ambientar bodas, ceremonias y eventos formales.",
+        "precio": 200,
+        "categoria": "Eventos",
+        "imagen_url": "https://images.pexels.com/photos/11282245/pexels-photo-11282245.jpeg",
+        "stock": 10
+    },
+    {
+        "nombre": "Montaje Floral Blanco",
+        "descripcion": "Decoración floral en tonos blancos ideal para bodas, sesiones fotográficas y celebraciones elegantes.",
+        "precio": 200,
+        "categoria": "Eventos",
+        "imagen_url": "https://media.istockphoto.com/id/1367185743/es/foto/zona-de-fotos-para-una-sesi%C3%B3n-de-fotos-globos-amarillos-y-grises.jpg?b=1&s=612x612&w=0&k=20&c=IvNiyS8m8BacDxsmUlAlF4O4XKG-czQ7ZQ4DeVjShcYA=",
+        "stock": 8
+    },
+    {
+        "nombre": "Decoración de Girasoles",
+        "descripcion": "Alegre composición de girasoles para decorar celebraciones, fiestas y eventos al aire libre.",
+        "precio": 200,
+        "categoria": "Eventos",
+        "imagen_url": "https://images.pexels.com/photos/5610373/pexels-photo-5610373.jpeg",
+        "stock": 12
+    }
 ]
 
 
@@ -122,7 +229,8 @@ with Session(engine) as session:
 
         existente = session.exec(
             select(Producto).where(
-                Producto.nombre == datos["nombre"]
+                Producto.nombre == datos["nombre"],
+                Producto.categoria == datos["categoria"]
             )
         ).first()
 

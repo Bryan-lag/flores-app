@@ -19,7 +19,7 @@ const Productos = () => {
   useEffect(() => {
     async function cargarProductos() {
       try {
-        const data = await obtenerProductos();
+        const data = await obtenerProductos("Ramos");
         setProductos(data);
       }
       catch (error) {

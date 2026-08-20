@@ -1,8 +1,11 @@
-import { funebre } from "../data/funebre";
+import { useEffect, useState } from "react";
+import { obtenerProductos } from "../api/productos";
 import CardFunebre from "../components/CardFunebre";
 import { useCarrito } from "../context/CarritoContext";
 
 const Funebre = () => {
+
+  const [funebre, setFunebre] = useState([]);
 
   const {
     carrito,
@@ -12,6 +15,14 @@ const Funebre = () => {
     decrementarCantidad,
     total
   } = useCarrito();
+
+  useEffect(() => {
+    obtenerProductos("Funebres")
+      .then(setFunebre)
+      .catch((error) => {
+        console.error("Error al obtener productos funebres:", error);
+      });
+  }, []);
 
   return (
 
@@ -73,7 +84,6 @@ const Funebre = () => {
 
                   <div className="flex items-center gap-2">
 
-                    {/* RESTAR */}
                     <button
                       onClick={() => decrementarCantidad(item.id)}
                       className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded"
@@ -81,12 +91,10 @@ const Funebre = () => {
                       -
                     </button>
 
-                    {/* CANTIDAD */}
                     <span className="font-bold">
                       {item.cantidad}
                     </span>
 
-                    {/* SUMAR */}
                     <button
                       onClick={() => incrementarCantidad(item.id)}
                       className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded"
@@ -94,7 +102,6 @@ const Funebre = () => {
                       +
                     </button>
 
-                    {/* ELIMINAR */}
                     <button
                       onClick={() => eliminarDelCarrito(item.id)}
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"

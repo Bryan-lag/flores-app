@@ -29,3 +29,4 @@ const CardProduct = ({ producto, agregarAlCarrito }) => {
 };
 
 export default CardProduct;
+

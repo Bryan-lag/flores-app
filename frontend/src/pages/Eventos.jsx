@@ -1,16 +1,29 @@
-import { eventos } from "../data/eventos";
+import { useEffect, useState } from "react";
+import { obtenerProductos } from "../api/productos";
 import CardEventos from "../components/CardEventos";
 import { useCarrito } from "../context/CarritoContext";
 
 const Eventos = () => {
 
+     const [eventos, setEventos] = useState([]);
+
+     useEffect(() => {
+
+          obtenerProductos("Eventos")
+               .then(setEventos)
+               .catch((error) => {
+                    console.error("Error al obtener productos de eventos:", error);
+               });
+
+     }, []);
+
      const {
-           carrito,
-           agregarAlCarrito,
-           eliminarDelCarrito,
-           incrementarCantidad,
-           decrementarCantidad,
-           total,
+          carrito,
+          agregarAlCarrito,
+          eliminarDelCarrito,
+          incrementarCantidad,
+          decrementarCantidad,
+          total,
      } = useCarrito();
 
      return (
@@ -38,62 +51,62 @@ const Eventos = () => {
                          Carrito 🛒
                     </h2>
 
-                 {carrito.length === 0 ? (
-                    <p>No hay ningún producto seleccionado</p>
-               ) : (
-     <>
-          <ul className="space-y-3">
+                    {carrito.length === 0 ? (
+                         <p>No hay ningún producto seleccionado</p>
+                    ) : (
+                         <>
+                              <ul className="space-y-3">
 
-               {carrito.map(item => (
-                    <li
-                         key={item.id}
-                         className="flex justify-between items-center bg-white p-3 rounded-lg"
-                    >
-                         <div>
-                              <p>{item.nombre}</p>
-                              <p>Q{item.precio}</p>
-                         </div>
+                                   {carrito.map(item => (
+                                        <li
+                                             key={item.id}
+                                             className="flex justify-between items-center bg-white p-3 rounded-lg"
+                                        >
+                                             <div>
+                                                  <p>{item.nombre}</p>
+                                                  <p>Q{item.precio}</p>
+                                             </div>
 
-                         <div className="flex items-center gap-2">
+                                             <div className="flex items-center gap-2">
 
-                              <button
-                                   onClick={() => decrementarCantidad(item.id)}
-                                   className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded cursor-pointer"
-                              >
-                                   -
-                              </button>
+                                                  <button
+                                                       onClick={() => decrementarCantidad(item.id)}
+                                                       className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded cursor-pointer"
+                                                  >
+                                                       -
+                                                  </button>
 
-                              <span className="font-bold">
-                                   {item.cantidad}
-                              </span>
+                                                  <span className="font-bold">
+                                                       {item.cantidad}
+                                                  </span>
 
-                              <button
-                                   onClick={() => incrementarCantidad(item.id)}
-                                   className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded cursor-pointer"
-                              >
-                                   +
-                              </button>
+                                                  <button
+                                                       onClick={() => incrementarCantidad(item.id)}
+                                                       className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded cursor-pointer"
+                                                  >
+                                                       +
+                                                  </button>
 
-                              <button
-                                   onClick={() => eliminarDelCarrito(item.id)}
-                                   className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded cursor-pointer"
-                              >
-                                   x
-                              </button>
+                                                  <button
+                                                       onClick={() => eliminarDelCarrito(item.id)}
+                                                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded cursor-pointer"
+                                                  >
+                                                       x
+                                                  </button>
 
-                         </div>
-                    </li>
-               ))}
+                                             </div>
+                                        </li>
+                                   ))}
 
-          </ul>
+                              </ul>
 
-               <div className="mt-4">
-                    <p className="font-bold text-lg">
-                         Total: Q{total.toFixed(2)}
-                    </p>
-               </div>
-          </>
-     )}
+                              <div className="mt-4">
+                                   <p className="font-bold text-lg">
+                                        Total: Q{total.toFixed(2)}
+                                   </p>
+                              </div>
+                         </>
+                    )}
 
                </div>
           </div>
