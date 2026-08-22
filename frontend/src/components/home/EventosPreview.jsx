@@ -26,7 +26,7 @@ const EventosPreview = () => {
 
           <section className="w-full">
 
-               <div className="relative group overflow-hidden rounded-3xl h-[400px] shadow-xl">
+               <div className="relative group overflow-hidden rounded-3xl h-100 shadow-xl">
 
                     {/* IMAGEN */}
                     <img

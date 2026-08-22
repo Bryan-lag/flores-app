@@ -6,6 +6,8 @@ import Productos from "./pages/Productos.jsx";
 import Funebre from "./pages/Funebre.jsx";
 import Arreglos from "./pages/Arreglos.jsx";
 import Eventos from "./pages/Eventos.jsx";
+import Carrito from "./pages/Carrito.jsx"
+import Catalogo from "./pages/Catalogo.jsx";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/arreglos" element={<Arreglos />} />
         <Route path="/eventos" element={<Eventos />} />
         <Route path="/flor-carrusel" element={<FlorCarrusel />} />
+        <Route path="/carrito" element={<Carrito/>} />
+        <Route path="/catalogo" element={<Catalogo/>} />
       </Routes>
     </>
   );

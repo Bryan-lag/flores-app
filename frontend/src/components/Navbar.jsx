@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useCarrito } from "../context/CarritoContext";
 
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [showCart, setShowCart] = useState(false);
@@ -98,7 +99,7 @@ const Navbar = () => {
                     className="flex items-center gap-3 border-b pb-3"
                   >
                     <img
-                      src={item.imagen}
+                      src={item.imagen_url}
                       alt={item.nombre}
                       className="w-16 h-16 object-cover rounded-xl"
                     />

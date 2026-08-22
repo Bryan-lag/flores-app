@@ -17,22 +17,23 @@ router = APIRouter(
     tags=["productos"]
 )
 
+
 def obtener_producto_o_404(
-        producto_id: int,
-        session: Session
-    ):
-        producto = session.get(
-            Producto,
-            producto_id
+    producto_id: int,
+    session: Session
+):
+    producto = session.get(
+        Producto,
+        producto_id
+    )
+
+    if not producto:
+        raise HTTPException(
+            status_code=404,
+            detail="Producto no encontrado"
         )
 
-        if not producto:
-            raise HTTPException(
-                status_code=404,
-                detail="Producto no encontrado"
-            )
-
-        return producto
+    return producto
 
 
 # GET todos los productos
@@ -41,9 +42,9 @@ def listar_productos(
     categoria: Optional[str] = Query(None),
     session: Session = Depends(get_session)
 ):
-    """"
+    """
     Lista todos los productos de la base de datos.
-    
+    Si se proporciona una categoría, filtra los productos por categoría.
     """
     query = select(Producto)
 
@@ -65,9 +66,10 @@ def obtener_producto(
 ):
     producto = obtener_producto_o_404(
         producto_id,
-        session 
+        session
     )
-    
+
+    return producto
 
 
 # POST crear producto
@@ -82,7 +84,6 @@ def crear_producto(
 ):
     """
     Crea un nuevo producto en la base de datos.
-    
     """
     nuevo_producto = Producto(
         **producto.model_dump()
@@ -95,7 +96,6 @@ def crear_producto(
     return nuevo_producto
 
 
-
 # PUT actualizar producto
 @router.put("/{producto_id}", response_model=ProductoRead)
 def actualizar_producto(
@@ -103,9 +103,8 @@ def actualizar_producto(
     datos: ProductoUpdate,
     session: Session = Depends(get_session)
 ):
-    """"
+    """
     Actualiza un producto existente en la base de datos.
-     
     """
     producto = obtener_producto_o_404(
         producto_id,
@@ -131,14 +130,16 @@ def actualizar_producto(
 
 
 # DELETE eliminar producto
-@router.delete("/{producto_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{producto_id}",
+    status_code=status.HTTP_204_NO_CONTENT
+)
 def eliminar_producto(
     producto_id: int,
     session: Session = Depends(get_session)
 ):
     """
     Elimina un producto de la base de datos.
-    
     """
     producto = obtener_producto_o_404(
         producto_id,
@@ -148,6 +149,4 @@ def eliminar_producto(
     session.delete(producto)
     session.commit()
 
-    return {
-        "mensaje": "Producto eliminado correctamente"
-    }
+    return None

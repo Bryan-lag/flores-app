@@ -139,7 +139,7 @@ productos = [
         "descripcion": "Corona floral mixta en tonos elegantes para ocasiones de condolencia.",
         "precio": 200,
         "categoria": "Funebres",
-        "imagen_url": "https://media.gettyimages.com/id/1204837391/es/foto/wreath-of-white-flowers-against-a-stone-wall.jpg?s=612x612&w=0&k=20&c=p4ffqr6ELkk4O23LnG9HpDGygiIe00QDaoN3r1qoL7k=",
+        "imagen_url": "https://images.pexels.com/photos/14838568/pexels-photo-14838568.jpeg",
         "stock": 12
     },
     {
@@ -147,7 +147,7 @@ productos = [
         "descripcion": "Corona de lirios blancos de elegante presentación para expresar condolencias.",
         "precio": 200,
         "categoria": "Funebres",
-        "imagen_url": "https://media.gettyimages.com/id/2149387037/es/foto/sandalwood-flowers-set-in-a-tray-as-a-symbol-of-mourning-for-the-deceased-is-a-local-tradition.jpg?s=612x612&w=0&k=20&c=0WufCZS-rPt6VwSXQtsqrmkZOOM2E4uQXXfUSJfz5Ck=",
+        "imagen_url": "https://images.pexels.com/photos/1033141/pexels-photo-1033141.jpeg",
         "stock": 7
     },
     {
@@ -155,7 +155,7 @@ productos = [
         "descripcion": "Corona floral blanca de estilo sobrio para homenajes y servicios funerarios.",
         "precio": 200,
         "categoria": "Funebres",
-        "imagen_url": "https://media.gettyimages.com/id/sb10068629l-001/es/foto/flower-wreath-on-stand-on-white-background.jpg?s=612x612&w=0&k=20&c=PFh3QzjHxnH0rmuUSBa6j0IojK6K8LeLuOOHNY8qo68=",
+        "imagen_url": "https://images.pexels.com/photos/273941/pexels-photo-273941.jpeg",
         "stock": 9
     },
     {
@@ -163,7 +163,7 @@ productos = [
         "descripcion": "Hermosa corona de girasoles naturales para rendir homenaje a un ser querido.",
         "precio": 200,
         "categoria": "Funebres",
-        "imagen_url": "https://media.gettyimages.com/id/1815933186/es/foto/funeral-wreath-or-funeral-flowers-along-with-a-set-of-offerings-to-be-placed-at-the-cremation.jpg?s=612x612&w=0&k=20&c=-xX5-bYbDsbvIavSD2i7l5BphJoo1DsLDQlCzWpFxWU=",
+        "imagen_url": "https://images.pexels.com/photos/1562262/pexels-photo-1562262.jpeg",
         "stock": 15
     },
     
@@ -209,7 +209,7 @@ productos = [
         "descripcion": "Decoración floral en tonos blancos ideal para bodas, sesiones fotográficas y celebraciones elegantes.",
         "precio": 200,
         "categoria": "Eventos",
-        "imagen_url": "https://media.istockphoto.com/id/1367185743/es/foto/zona-de-fotos-para-una-sesi%C3%B3n-de-fotos-globos-amarillos-y-grises.jpg?b=1&s=612x612&w=0&k=20&c=IvNiyS8m8BacDxsmUlAlF4O4XKG-czQ7ZQ4DeVjShcYA=",
+        "imagen_url": "https://images.pexels.com/photos/37058552/pexels-photo-37058552.jpeg",
         "stock": 8
     },
     {
@@ -221,6 +221,12 @@ productos = [
         "stock": 12
     }
 ]
+
+
+from sqlmodel import Session, select
+
+from database import engine
+from models import Producto
 
 
 with Session(engine) as session:
@@ -235,11 +241,20 @@ with Session(engine) as session:
         ).first()
 
         if existente:
-            print(f"'{datos['nombre']}' ya existe.")
-            continue
+            existente.imagen_url = datos["imagen_url"]
+            existente.descripcion = datos["descripcion"]
+            existente.precio = datos["precio"]
+            existente.stock = datos["stock"]
 
-        producto = Producto(**datos)
-        session.add(producto)
+            session.add(existente)
+
+            print(f"'{datos['nombre']}' actualizado.")
+
+        else:
+            producto = Producto(**datos)
+            session.add(producto)
+
+            print(f"'{datos['nombre']}' creado.")
 
     session.commit()
 
