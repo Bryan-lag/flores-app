@@ -41,6 +41,7 @@ const Navbar = () => {
             <li><Link to="/">Inicio</Link></li>
             <li><Link to="/productos">Ramos</Link></li>
             <li><Link to="/arreglos">Arreglos</Link></li>
+            <li><Link to="/ocaciones">Ocaciones</Link></li>
             <li><Link to="/funebre">Funebre</Link></li>
             <li><Link to="/eventos">Eventos</Link></li>
             <li><Link to="/catalogo">Catalogo</Link></li>
@@ -178,6 +179,12 @@ const Navbar = () => {
             <li>
               <Link to="/arreglos" onClick={() => setOpen(false)}>
                 Arreglos
+              </Link>
+            </li>
+
+             <li>
+              <Link to="/ocaciones" onClick={() => setOpen(false)}>
+                Ocaciones
               </Link>
             </li>
 

@@ -8,6 +8,8 @@ import Arreglos from "./pages/Arreglos.jsx";
 import Eventos from "./pages/Eventos.jsx";
 import Carrito from "./pages/Carrito.jsx"
 import Catalogo from "./pages/Catalogo.jsx";
+import Contacto from "./pages/Contacto.jsx";
+import Ocaciones from "./pages/Ocaciones.jsx";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/flor-carrusel" element={<FlorCarrusel />} />
         <Route path="/carrito" element={<Carrito/>} />
         <Route path="/catalogo" element={<Catalogo/>} />
+        <Route path="/contacto" element={<Contacto/>} />
+        <Route path="/ocaciones" element={<Ocaciones/>} />
       </Routes>
     </>
   );
