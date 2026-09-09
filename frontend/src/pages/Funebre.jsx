@@ -8,12 +8,7 @@ const Funebre = () => {
   const [funebre, setFunebre] = useState([]);
 
   const {
-    carrito,
-    agregarAlCarrito,
-    eliminarDelCarrito,
-    incrementarCantidad,
-    decrementarCantidad,
-    total
+    agregarAlCarrito
   } = useCarrito();
 
   useEffect(() => {
@@ -44,90 +39,6 @@ const Funebre = () => {
           />
 
         ))}
-
-      </div>
-
-      {/* CARRITO */}
-      <div className="mt-10 bg-purple-100 p-4 rounded-xl shadow-md">
-
-        <h2 className="text-xl font-bold mb-4">
-          Carrito 🛒
-        </h2>
-
-        {carrito.length === 0 ? (
-
-          <p>No hay productos en carrito</p>
-
-        ) : (
-
-          <>
-            <ul className="space-y-3">
-
-              {carrito.map((item) => (
-
-                <li
-                  key={item.id}
-                  className="flex justify-between items-center bg-white p-3 rounded-lg"
-                >
-
-                  <div>
-
-                    <p className="font-semibold">
-                      {item.nombre}
-                    </p>
-
-                    <p className="text-sm text-gray-600">
-                      Q{item.precio.toFixed(2)}
-                    </p>
-
-                  </div>
-
-                  <div className="flex items-center gap-2">
-
-                    <button
-                      onClick={() => decrementarCantidad(item.id)}
-                      className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded"
-                    >
-                      -
-                    </button>
-
-                    <span className="font-bold">
-                      {item.cantidad}
-                    </span>
-
-                    <button
-                      onClick={() => incrementarCantidad(item.id)}
-                      className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded"
-                    >
-                      +
-                    </button>
-
-                    <button
-                      onClick={() => eliminarDelCarrito(item.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                    >
-                      X
-                    </button>
-
-                  </div>
-
-                </li>
-
-              ))}
-
-            </ul>
-
-            {/* TOTAL */}
-            <div className="mt-5 border-t pt-4">
-
-              <p className="text-lg font-bold">
-                Total: Q{total.toFixed(2)}
-              </p>
-
-            </div>
-          </>
-
-        )}
 
       </div>
 

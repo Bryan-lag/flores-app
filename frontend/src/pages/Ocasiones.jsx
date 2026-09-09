@@ -1,4 +1,8 @@
-const Ocaciones = () => {
+import { Link } from "react-router-dom";
+
+
+const Ocasiones = () => {
+
   return (
     <>
       {/* OCASIONES */}
@@ -22,7 +26,10 @@ const Ocaciones = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
           {/* Cumpleaños */}
-          <div className="group relative overflow-hidden rounded-3xl bg-pink-100 p-8 min-h-64 shadow-sm hover:shadow-xl transition duration-300 cursor-pointer">
+          <Link
+            to="/productos?categoria=Cumpleaños"
+            className="group relative overflow-hidden rounded-3xl bg-pink-100 p-8 min-h-64 shadow-sm hover:shadow-xl transition duration-300 cursor-pointer"
+          >
 
             <div className="relative z-10">
               <span className="text-4xl">🎂</span>
@@ -41,11 +48,14 @@ const Ocaciones = () => {
             </div>
 
             <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-pink-300/40 rounded-full group-hover:scale-125 transition duration-500"></div>
-          </div>
+          </Link>
 
 
           {/* Aniversario */}
-          <div className="group relative overflow-hidden rounded-3xl bg-purple-100 p-8 min-h-64 shadow-sm hover:shadow-xl transition duration-300 cursor-pointer">
+          <Link
+            to="/productos?categoria=Aniversario"
+            className="group relative overflow-hidden rounded-3xl bg-purple-100 p-8 min-h-64 shadow-sm hover:shadow-xl transition duration-300 cursor-pointer"
+          >
 
             <div className="relative z-10">
               <span className="text-4xl">❤️</span>
@@ -64,11 +74,14 @@ const Ocaciones = () => {
             </div>
 
             <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-purple-300/40 rounded-full group-hover:scale-125 transition duration-500"></div>
-          </div>
+          </Link>
 
 
           {/* Amistad */}
-          <div className="group relative overflow-hidden rounded-3xl bg-emerald-50 p-8 min-h-64 shadow-sm hover:shadow-xl transition duration-300 cursor-pointer">
+          <Link
+            to="/productos?categoria=Amistad"
+            className="group relative overflow-hidden rounded-3xl bg-emerald-50 p-8 min-h-64 shadow-sm hover:shadow-xl transition duration-300 cursor-pointer"
+          >
 
             <div className="relative z-10">
               <span className="text-4xl">🌷</span>
@@ -87,7 +100,7 @@ const Ocaciones = () => {
             </div>
 
             <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-emerald-200/40 rounded-full group-hover:scale-125 transition duration-500"></div>
-          </div>
+          </Link>
 
         </div>
 
@@ -96,4 +109,4 @@ const Ocaciones = () => {
   );
 };
 
-export default Ocaciones;
+export default Ocasiones;

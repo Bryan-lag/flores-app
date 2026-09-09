@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 
 
 const CardFunebre = ({ producto, agregarAlCarrito }) => {
 
   return (
 
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:scale-105 hover:shadow-xl transition duration-300">
+    <Link to={`/productos/${producto.id}`} className="bg-white rounded-2xl shadow-md overflow-hidden hover:scale-105 hover:shadow-xl transition duration-300">
 
       <img
         src={producto.imagen_url}
@@ -31,7 +32,7 @@ const CardFunebre = ({ producto, agregarAlCarrito }) => {
 
       </div>
 
-    </div>
+    </Link>
 
   );
 };

@@ -42,7 +42,7 @@ const EventosPreview = () => {
                     <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
 
                          <h2 className="text-3xl md:text-4xl font-bold mb-3">
-                              Arreglos para Eventos
+                              Eventos
                          </h2>
 
                          <p className="text-sm md:text-base text-gray-200 mb-5 max-w-md">

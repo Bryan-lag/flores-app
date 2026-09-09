@@ -9,7 +9,9 @@ import Eventos from "./pages/Eventos.jsx";
 import Carrito from "./pages/Carrito.jsx"
 import Catalogo from "./pages/Catalogo.jsx";
 import Contacto from "./pages/Contacto.jsx";
-import Ocaciones from "./pages/Ocaciones.jsx";
+import Ocasiones from "./pages/Ocasiones.jsx";
+import OcasionesProductos from "./pages/OcasionesProductos.jsx";
+import ProductoDetalle from "./pages/ProductoDetalle";
 
 function App() {
   return (
@@ -26,7 +28,9 @@ function App() {
         <Route path="/carrito" element={<Carrito/>} />
         <Route path="/catalogo" element={<Catalogo/>} />
         <Route path="/contacto" element={<Contacto/>} />
-        <Route path="/ocaciones" element={<Ocaciones/>} />
+        <Route path="/ocasiones" element={<Ocasiones/>} />
+        <Route path="/ocasiones/:ocasion" element={<OcasionesProductos/>} />
+        <Route path="/productos/:id" element={<ProductoDetalle />} />
       </Routes>
     </>
   );

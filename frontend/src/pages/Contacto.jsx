@@ -5,9 +5,9 @@ const Contacto = () => {
     <div className="min-h-screen bg-stone-50 pt-24 pb-16">
 
       {/* Encabezado */}
-      <section className="relative text-center px-6 py-10 mx-5 mb-12 rounded-3xl bg-purple-700 shadow-lg overflow-hidden">
+      <section className="relative text-center px-6 py-10 mx-5 mb-12 rounded-3xl bg-purple-500 shadow-lg overflow-hidden">
 
-        {/* Detalle decorativo */}
+        {/* Decoracion */}
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-pink-400/20 rounded-full"></div>
         <div className="absolute -bottom-12 -left-10 w-36 h-36 bg-purple-400/20 rounded-full"></div>
 
@@ -37,7 +37,7 @@ const Contacto = () => {
           {/* Información de contacto */}
           <div className="space-y-6">
 
-            <div className="mb-8">
+            <div className="mb-8 ">
               <p className="text-purple-700 font-medium tracking-wide uppercase text-sm mb-2">
                 Estamos para ti
               </p>
@@ -137,7 +137,7 @@ const Contacto = () => {
 
 
           {/* Formulario */}
-          <div className="bg-white rounded-3xl shadow-md border border-stone-100 p-6 md:p-8">
+          <div className="bg-pink-100 rounded-3xl shadow-md border border-stone-100 p-6 md:p-8">
 
             <div className="mb-7">
               <p className="text-purple-700 font-medium tracking-wide uppercase text-sm mb-2">

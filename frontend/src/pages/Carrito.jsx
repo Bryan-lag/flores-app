@@ -15,7 +15,7 @@ const Carrito = () => {
     <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
 
       <h1 className="text-3xl md:text-4xl font-serif font-bold text-purple-800 mb-8">
-        Tu carrito 🛒
+        Tu carrito 
       </h1>
 
       {carrito.length === 0 ? (

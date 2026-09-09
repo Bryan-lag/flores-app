@@ -1,9 +1,9 @@
-
+import {Link} from "react-router-dom";
 
 const CardProduct = ({ producto, agregarAlCarrito }) => {
-  console.log(producto);
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition duration-300">
+    <Link to={`/productos/${producto.id}`} className="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition duration-300">
 
       <img
         src={producto.imagen_url}
@@ -17,14 +17,14 @@ const CardProduct = ({ producto, agregarAlCarrito }) => {
 
         <button
           
-          onClick={() => agregarAlCarrito(producto)}
+          onClick={() => agregarAlCarrito(producto, 1)}
           className="mt-3 w-full bg-purple-500 text-white py-2 rounded-lg hover:bg-purple-600 cursor-pointer"
         >
           Comprar
         </button>
       </div>
 
-    </div>
+    </Link>
   );
 };
 
