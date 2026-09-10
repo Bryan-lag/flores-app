@@ -2,9 +2,11 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers.productos import router as productos_router
 
 from database import init_db
 from routers.productos import router as productos_router
+from routers.pedidos import router as pedidos_router
 
 
 @asynccontextmanager
@@ -21,9 +23,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-
 # Rutas de productos
 app.include_router(productos_router)
+
+# Rutas de pedidos
+app.include_router(pedidos_router)
+
 
 
 # Configuración para conectar React/Vite
