@@ -20,10 +20,24 @@ def crear_pedido(
     pedido: PedidoCreate,
     session: Session = Depends(get_session)
 ):
+    # Validar que el pedido tenga al menos un producto
+    if not pedido.detalles:
+        raise HTTPException(
+            status_code=400,
+            detail="El pedido debe contener al menos un producto"
+        )
+
     total = 0
     detalles = []
 
+    # Validar productos y calcular total
     for item in pedido.detalles:
+
+        if item.cantidad <= 0:
+            raise HTTPException(
+                status_code=400,
+                detail="La cantidad debe ser mayor que 0"
+            )
 
         producto = session.get(
             Producto,
@@ -34,12 +48,6 @@ def crear_pedido(
             raise HTTPException(
                 status_code=404,
                 detail=f"Producto {item.producto_id} no encontrado"
-            )
-
-        if item.cantidad <= 0:
-            raise HTTPException(
-                status_code=400,
-                detail="La cantidad debe ser mayor que 0"
             )
 
         if item.cantidad > producto.stock:
@@ -60,6 +68,7 @@ def crear_pedido(
 
         detalles.append(detalle)
 
+    # Crear el pedido
     nuevo_pedido = Pedido(
         nombre_cliente=pedido.nombre_cliente,
         telefono=pedido.telefono,
@@ -69,18 +78,24 @@ def crear_pedido(
     )
 
     session.add(nuevo_pedido)
-    session.commit()
-    session.refresh(nuevo_pedido)
 
+    # Flush obtiene el ID del pedido sin hacer commit todavía
+    session.flush()
+
+    # Agregar los detalles
     for detalle in detalles:
         detalle.pedido_id = nuevo_pedido.id
-
         session.add(detalle)
 
+    # Un único commit para todo el pedido
     session.commit()
+
+    # Actualizar el objeto con los datos definitivos
+    session.refresh(nuevo_pedido)
 
     return {
         "mensaje": "Pedido creado correctamente",
         "pedido_id": nuevo_pedido.id,
         "total": total
     }
+
