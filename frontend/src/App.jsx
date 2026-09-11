@@ -12,6 +12,7 @@ import Contacto from "./pages/Contacto.jsx";
 import Ocasiones from "./pages/Ocasiones.jsx";
 import OcasionesProductos from "./pages/OcasionesProductos.jsx";
 import ProductoDetalle from "./pages/ProductoDetalle";
+import Checkout from "./pages/Checkout.jsx";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/ocasiones" element={<Ocasiones/>} />
         <Route path="/ocasiones/:ocasion" element={<OcasionesProductos/>} />
         <Route path="/productos/:id" element={<ProductoDetalle />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </>
   );

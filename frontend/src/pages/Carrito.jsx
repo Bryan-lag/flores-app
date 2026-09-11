@@ -130,11 +130,12 @@ const Carrito = () => {
               </span>
             </div>
 
-            <button
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl font-semibold transition cursor-pointer"
-            >
-              Proceder al pago
-            </button>
+            <Link
+                to="/checkout"
+                className="block w-full text-center bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl font-semibold transition"
+              >
+                Continuar con el pedido
+            </Link>
 
           </div>
 
