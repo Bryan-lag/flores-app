@@ -37,32 +37,34 @@ const Checkout = () => {
       .join("\n");
 
     const mensaje = `
-Hola, quiero confirmar mi pedido en TULIPA 🌷
+      Hola, quiero confirmar mi pedido en TULIPA 
 
-*Pedido #${pedidoId}*
+      *Pedido #${pedidoId}*
 
-*Cliente:* ${formulario.nombre_cliente}
-*Teléfono:* ${formulario.telefono}
+      *Cliente:* ${formulario.nombre_cliente}
+      *Teléfono:* ${formulario.telefono}
 
-*Dirección:*
-${formulario.direccion}
+      *Dirección:*
+      ${formulario.direccion}
 
-*Referencia:*
-${formulario.referencia || "No especificada"}
+      *Referencia:*
+      ${formulario.referencia || "No especificada"}
 
-*Productos:*
-${productos}
+      *Productos:*
+      ${productos}
 
-*Total: Q${total}*
+      *Total: Q${total}*
 
-¡Gracias!
-`;
+      ¡Gracias!
+      `;
 
     return mensaje;
   };
 
+  
+
   const abrirWhatsApp = (pedidoId) => {
-    const numeroWhatsApp = "502XXXXXXXX";
+    const numeroWhatsApp = import.meta.env.VITE_WHATSAPP_NUMBER; 
 
     const mensaje = crearMensajeWhatsApp(pedidoId);
 
