@@ -5,21 +5,22 @@ import { Link } from "react-router-dom";
 const FunebresPreview = () => {
 
      const [destacado, setDestacado] = useState(null);
-          useEffect(() => {
 
-     obtenerProductos("Funebres")
-          .then((productos) => {
-               console.log("FUNEBRES DESDE API:", productos);
-               setDestacado(productos[0]);
-          })
-          .catch((error) => {
-               console.error("ERROR FUNEBRES:", error);
-          });
+     useEffect(() => {
+
+          obtenerProductos("Funebres")
+               .then((productos) => {
+                    console.log("FUNEBRES DESDE API:", productos);
+                    setDestacado(productos[0]);
+               })
+               .catch((error) => {
+                    console.error("ERROR FUNEBRES:", error);
+               });
 
      }, []);
 
      if (!destacado) {
-      return <p>Cargando Funebres...</p>;
+          return <p>Cargando Funebres...</p>;
      }
 
      return (
@@ -39,9 +40,9 @@ const FunebresPreview = () => {
                     <div className="absolute inset-0 bg-black/40"></div>
 
                     {/* CONTENIDO */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
+                    <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-8 text-white">
 
-                         <h2 className="text-3xl md:text-4xl font-bold mb-3">
+                         <h2 className="text-2xl md:text-4xl font-bold mb-3">
                               Fúnebres
                          </h2>
 

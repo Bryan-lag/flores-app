@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Detalles = () => {
   return (
-    <div className="w-75 sm:w-125 md:w-125 h-125 flex flex-col justify-center text-center md:text-left space-y-4">
+    <div className="w-full max-w-md min-h-100 md:h-125 flex flex-col justify-center text-center md:text-left space-y-4">
 
       <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
         Flores que hablan <br />
@@ -67,3 +67,4 @@ const Detalles = () => {
 };
 
 export default Detalles;
+

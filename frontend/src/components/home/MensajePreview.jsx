@@ -2,10 +2,10 @@
 
 const MensajePreview = () => {
   return (
-    <div className="mt-15 flex h-100 rounded-3xl overflow-hidden shadow-2xl">
+    <div className="mt-15 flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-2xl">
 
       {/* MITAD IMAGEN */}
-      <div className="w-1/2 h-full">
+      <div className="w-full md:w-1/2 h-64 md:h-100">
         <img
           src="https://images.pexels.com/photos/31505803/pexels-photo-31505803.jpeg"
           alt=""
@@ -14,9 +14,9 @@ const MensajePreview = () => {
       </div>
 
       {/* MITAD TEXTO */}
-      <div className="w-1/2 h-full bg-purple-100 flex flex-col justify-center px-10">
+      <div className="w-full md:w-1/2 min-h-64 md:h-100 bg-purple-100 flex flex-col justify-center px-6 md:px-10 py-10">
 
-        <h1 className="font-serif text-4xl font-bold text-purple-900 mb-4">
+        <h1 className="font-serif text-3xl md:text-4xl font-bold text-purple-900 mb-4">
           Conoce la historia
         </h1>
 
@@ -32,3 +32,4 @@ const MensajePreview = () => {
 };
 
 export default MensajePreview;
+

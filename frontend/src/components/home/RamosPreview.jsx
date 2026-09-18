@@ -46,7 +46,7 @@ const RamosPreview = () => {
 
             <div className="flex justify-center mt-10">
                 <Link
-                    to="/Productos"
+                    to="/productos"
                     className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-full transition"
                 >
                     Ver más...

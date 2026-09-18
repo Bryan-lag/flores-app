@@ -20,7 +20,7 @@ const FlorCarrusel = () => {
 
     if (productos.length === 0) {
         return (
-            <div className="w-75 sm:w-125 md:w-125 h-125 flex items-center justify-center">
+            <div className="w-full max-w-125 h-100 sm:h-125 flex items-center justify-center">
                 <p className="text-gray-500">Cargando...</p>
             </div>
         );
@@ -37,9 +37,10 @@ const FlorCarrusel = () => {
     };
 
     return (
-        <div className="relative w-75 sm:w-125 md:w-125">
+        <div className="relative w-full max-w-125">
+
             {/* Imagen */}
-            <div className="w-full h-125 overflow-hidden rounded-2xl shadow-2xl bg-black">
+            <div className="w-full h-100 sm:h-125 overflow-hidden rounded-2xl shadow-2xl bg-black">
                 <img
                     className="w-full h-full object-cover object-center"
                     src={productos[index].imagen_url}
@@ -48,7 +49,7 @@ const FlorCarrusel = () => {
             </div>
 
             {/* Información */}
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-black/30 backdrop-blur-md px-4 py-2 rounded-xl text-white text-center">
+            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-black/30 backdrop-blur-md px-4 py-2 rounded-xl text-white text-center max-w-[80%]">
                 <h2 className="font-serif font-semibold text-lg">
                     {productos[index].nombre}
                 </h2>
@@ -101,8 +102,10 @@ const FlorCarrusel = () => {
                     />
                 ))}
             </div>
+
         </div>
     );
 };
 
 export default FlorCarrusel;
+
