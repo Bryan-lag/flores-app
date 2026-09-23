@@ -2,13 +2,13 @@
 
 const MensajePreview = () => {
   return (
-    <div className="mt-15 flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-2xl">
+    <div className="mt-16 flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-2xl">
 
       {/* MITAD IMAGEN */}
       <div className="w-full md:w-1/2 h-64 md:h-100">
         <img
           src="https://images.pexels.com/photos/31505803/pexels-photo-31505803.jpeg"
-          alt=""
+          alt="Flores"
           className="w-full h-full object-cover"
         />
       </div>

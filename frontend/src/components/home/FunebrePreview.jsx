@@ -4,65 +4,66 @@ import { Link } from "react-router-dom";
 
 const FunebresPreview = () => {
 
-     const [destacado, setDestacado] = useState(null);
+  const [destacado, setDestacado] = useState(null);
 
-     useEffect(() => {
+  useEffect(() => {
 
-          obtenerProductos("Funebres")
-               .then((productos) => {
-                    console.log("FUNEBRES DESDE API:", productos);
-                    setDestacado(productos[0]);
-               })
-               .catch((error) => {
-                    console.error("ERROR FUNEBRES:", error);
-               });
+    obtenerProductos("Funebres")
+      .then((productos) => {
+        console.log("FUNEBRES DESDE API:", productos);
+        setDestacado(productos[0]);
+      })
+      .catch((error) => {
+        console.error("ERROR FUNEBRES:", error);
+      });
 
-     }, []);
+  }, []);
 
-     if (!destacado) {
-          return <p>Cargando Funebres...</p>;
-     }
+  if (!destacado) {
+    return <p>Cargando Funebres...</p>;
+  }
 
-     return (
+  return (
 
-          <section className="w-full">
+    <section className="w-full">
 
-               <div className="relative group overflow-hidden rounded-3xl h-100 shadow-xl">
+      <div className="relative group overflow-hidden rounded-3xl h-80 sm:h-90 md:h-100 shadow-xl">
 
-                    {/* IMAGEN */}
-                    <img
-                         src={destacado.imagen_url}
-                         alt={destacado.nombre}
-                         className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                    />
+        {/* IMAGEN */}
+        <img
+          src={destacado.imagen_url}
+          alt={destacado.nombre}
+          className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+        />
 
-                    {/* OVERLAY */}
-                    <div className="absolute inset-0 bg-black/40"></div>
+        {/* OVERLAY */}
+        <div className="absolute inset-0 bg-black/40"></div>
 
-                    {/* CONTENIDO */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-8 text-white">
+        {/* CONTENIDO */}
+        <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-8 text-white">
 
-                         <h2 className="text-2xl md:text-4xl font-bold mb-3">
-                              Fúnebres
-                         </h2>
+          <h2 className="text-2xl md:text-4xl font-bold mb-3">
+            Fúnebres
+          </h2>
 
-                         <p className="text-sm md:text-base text-gray-200 mb-5 max-w-md">
-                              Flores que acompañan con respeto, delicadeza y serenidad en los momentos más importantes.
-                         </p>
+          <p className="text-sm md:text-base text-gray-200 mb-5 max-w-md">
+            Flores que acompañan con respeto, delicadeza y serenidad en los momentos más importantes.
+          </p>
 
-                         <Link
-                              to="/funebre"
-                              className="bg-white text-purple-900 px-6 py-3 rounded-full w-fit font-medium hover:bg-purple-200 transition duration-300"
-                         >
-                              Ver colección
-                         </Link>
+          <Link
+            to="/funebre"
+            className="bg-white text-purple-900 px-6 py-3 rounded-full w-fit font-medium hover:bg-purple-200 transition duration-300"
+          >
+            Ver colección
+          </Link>
 
-                    </div>
+        </div>
 
-               </div>
+      </div>
 
-          </section>
-     );
+    </section>
+  );
 };
 
 export default FunebresPreview;
+

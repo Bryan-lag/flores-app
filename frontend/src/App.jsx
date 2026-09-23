@@ -14,11 +14,14 @@ import OcasionesProductos from "./pages/OcasionesProductos.jsx";
 import ProductoDetalle from "./pages/ProductoDetalle";
 import Checkout from "./pages/Checkout.jsx";
 import Footer from "./components/Footer.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 function App() {
   return (
     <>
       <Navbar />
+      <ScrollToTop />
+
 
       <Routes>
         <Route path="/" element={<Home />} />

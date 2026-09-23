@@ -20,7 +20,7 @@ const FlorCarrusel = () => {
 
     if (productos.length === 0) {
         return (
-            <div className="w-full max-w-125 h-100 sm:h-125 flex items-center justify-center">
+            <div className="w-full max-w-125 aspect-square flex items-center justify-center">
                 <p className="text-gray-500">Cargando...</p>
             </div>
         );
@@ -37,10 +37,10 @@ const FlorCarrusel = () => {
     };
 
     return (
-        <div className="relative w-full max-w-125">
+        <div className="relative w-full max-w-125 aspect-square">
 
             {/* Imagen */}
-            <div className="w-full h-100 sm:h-125 overflow-hidden rounded-2xl shadow-2xl bg-black">
+            <div className="w-full h-full overflow-hidden rounded-2xl shadow-2xl bg-black">
                 <img
                     className="w-full h-full object-cover object-center"
                     src={productos[index].imagen_url}

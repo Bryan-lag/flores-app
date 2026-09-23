@@ -16,11 +16,11 @@ const ArreglosPreview = () => {
 
         const data = await obtenerProductos("Arreglos");
 
-        if(Array.isArray(data)){
+        if (Array.isArray(data)) {
           setArreglos(data);
         }
 
-      } catch(error){
+      } catch (error) {
         console.error("Error al obtener arreglos:", error);
       }
     };
@@ -29,9 +29,7 @@ const ArreglosPreview = () => {
 
   }, []);
 
-
-  const preview = arreglos.slice(0,3);
-
+  const preview = arreglos.slice(0, 3);
 
   return (
     <section className="w-full py-16">
@@ -48,10 +46,9 @@ const ArreglosPreview = () => {
 
       </div>
 
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-
-        {preview.map((producto)=>(
+        {preview.map((producto) => (
           <CardArreglos
             key={producto.id}
             producto={producto}
@@ -60,7 +57,6 @@ const ArreglosPreview = () => {
         ))}
 
       </div>
-
 
       <div className="flex justify-center mt-10">
 
@@ -72,7 +68,6 @@ const ArreglosPreview = () => {
         </Link>
 
       </div>
-
 
     </section>
   );
