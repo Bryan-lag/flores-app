@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from database import get_session
 from models import Pedido, DetallePedido, Producto
@@ -27,46 +27,59 @@ def crear_pedido(
             detail="El pedido debe contener al menos un producto"
         )
 
+    # Si el mismo producto viene repetido, sumamos sus cantidades.
+    # Así el control de stock se hace sobre el total real pedido.
+    cantidades: dict[int, int] = {}
+
+    for item in pedido.detalles:
+        cantidades[item.producto_id] = (
+            cantidades.get(item.producto_id, 0) + item.cantidad
+        )
+
     total = 0
     detalles = []
 
-    # Validar productos y calcular total
-    for item in pedido.detalles:
+    # Se recorren en orden de id para evitar bloqueos cruzados
+    # cuando dos pedidos llegan al mismo tiempo.
+    for producto_id in sorted(cantidades):
+        cantidad = cantidades[producto_id]
 
-        if item.cantidad <= 0:
-            raise HTTPException(
-                status_code=400,
-                detail="La cantidad debe ser mayor que 0"
-            )
-
-        producto = session.get(
-            Producto,
-            item.producto_id
-        )
+        # with_for_update() bloquea la fila hasta terminar la transacción:
+        # dos pedidos simultáneos no pueden comprar la misma última unidad.
+        producto = session.exec(
+            select(Producto)
+            .where(Producto.id == producto_id)
+            .with_for_update()
+        ).first()
 
         if not producto:
             raise HTTPException(
                 status_code=404,
-                detail=f"Producto {item.producto_id} no encontrado"
+                detail=f"Producto {producto_id} no encontrado"
             )
 
-        if item.cantidad > producto.stock:
+        if cantidad > producto.stock:
             raise HTTPException(
                 status_code=400,
-                detail=f"No hay suficiente stock de {producto.nombre}"
+                detail=(
+                    f"No hay suficiente stock de {producto.nombre} "
+                    f"(disponible: {producto.stock})"
+                )
             )
 
-        subtotal = producto.precio * item.cantidad
+        # Descontar el stock
+        producto.stock -= cantidad
+        session.add(producto)
 
-        total += subtotal
+        total += producto.precio * cantidad
 
-        detalle = DetallePedido(
-            producto_id=producto.id,
-            cantidad=item.cantidad,
-            precio_unitario=producto.precio
+        detalles.append(
+            DetallePedido(
+                producto_id=producto.id,
+                cantidad=cantidad,
+                precio_unitario=producto.precio
+            )
         )
-
-        detalles.append(detalle)
 
     # Crear el pedido
     nuevo_pedido = Pedido(
@@ -87,10 +100,10 @@ def crear_pedido(
         detalle.pedido_id = nuevo_pedido.id
         session.add(detalle)
 
-    # Un único commit para todo el pedido
+    # Un único commit: pedido, detalles y stock se guardan juntos.
+    # Si algo falla antes de aquí, no se guarda nada.
     session.commit()
 
-    # Actualizar el objeto con los datos definitivos
     session.refresh(nuevo_pedido)
 
     return {
@@ -98,4 +111,3 @@ def crear_pedido(
         "pedido_id": nuevo_pedido.id,
         "total": total
     }
-
