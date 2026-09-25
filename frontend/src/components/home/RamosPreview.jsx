@@ -1,26 +1,19 @@
-import { useEffect, useState } from "react";
 import CardProduct from "../CardProduct";
 import { useCarrito } from "../../context/CarritoContext";
 import { Link } from "react-router-dom";
-import { obtenerProductos } from "../../api/productos";
+import { useProductos } from "../../hooks/useProductos";
 
 const RamosPreview = () => {
-    const [productos, setProductos] = useState([]);
+    const { productos: ramos } = useProductos("Ramos");
 
     const { agregarAlCarrito } = useCarrito();
 
-    useEffect(() => {
-        const cargarProductos = async () => {
-            try {
-                const data = await obtenerProductos("Ramos");
-                setProductos(data.slice(0, 3));
-            } catch (error) {
-                console.error("Error al obtener productos:", error);
-            }
-        };
+    const productos = ramos.slice(0, 3);
 
-        cargarProductos();
-    }, []);
+
+    if (productos.length === 0) {
+        return null;
+    }
 
     return (
         <section className="w-full py-16">
@@ -34,7 +27,7 @@ const RamosPreview = () => {
                 </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {productos.map((producto) => (
                     <CardProduct
                         key={producto.id}

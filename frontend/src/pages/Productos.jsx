@@ -1,12 +1,10 @@
-import { obtenerProductos } from "../api/productos";
 import CardProduct from "../components/CardProduct";
+import EstadoCarga from "../components/EstadoCarga";
 import { useCarrito } from "../context/CarritoContext";
-import { useEffect, useState } from "react";
+import { useProductos } from "../hooks/useProductos";
 import { useSearchParams } from "react-router-dom";
 
 const Productos = () => {
-
-  const [productos, setProductos] = useState([]);
 
   const { agregarAlCarrito } = useCarrito();
 
@@ -14,27 +12,7 @@ const Productos = () => {
 
   const categoria = searchParams.get("categoria") || "Ramos";
 
-  useEffect(() => {
-
-    async function cargarProductos() {
-
-      try {
-
-        const data = await obtenerProductos(categoria);
-
-        setProductos(data);
-
-      } catch (error) {
-
-        console.error("Error al obtener los productos", error);
-
-      }
-
-    }
-
-    cargarProductos();
-
-  }, [categoria]);
+  const { productos, cargando, error, reintentar } = useProductos(categoria);
 
   return (
     <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
@@ -71,19 +49,25 @@ const Productos = () => {
       </div>
 
       {/* GRID DE PRODUCTOS */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+      <EstadoCarga
+        cargando={cargando}
+        error={error}
+        vacio={productos.length === 0}
+        mensajeVacio={`Aún no tenemos productos en "${categoria}".`}
+        onReintentar={reintentar}
+      >
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-4">
 
-        {productos.map((producto) => (
+          {productos.map((producto) => (
+            <CardProduct
+              key={producto.id}
+              producto={producto}
+              agregarAlCarrito={agregarAlCarrito}
+            />
+          ))}
 
-          <CardProduct
-            key={producto.id}
-            producto={producto}
-            agregarAlCarrito={agregarAlCarrito}
-          />
-
-        ))}
-
-      </div>
+        </div>
+      </EstadoCarga>
 
     </div>
   );

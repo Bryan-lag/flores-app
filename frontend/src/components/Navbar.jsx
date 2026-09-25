@@ -1,43 +1,73 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useCarrito } from "../context/CarritoContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [busqueda, setBusqueda] = useState("");
 
   const { totalItems, carrito } = useCarrito();
 
-  return (
-    <nav className="fixed top-0 left-0 w-full bg-purple-200 z-50 shadow-md">
-      
-      {/* Barra principal */}
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+  const navigate = useNavigate();
 
-        {/* Logo */}
-        <Link to="/" onClick={() => setOpen(false)}>
+  const buscarProductos = () => {
+    const texto = busqueda.trim();
+
+    if (texto === "") {
+      navigate("/catalogo");
+    } else {
+      navigate(`/catalogo?buscar=${encodeURIComponent(texto)}`);
+    }
+
+    setOpen(false);
+  };
+
+  const manejarEnter = (e) => {
+    if (e.key === "Enter") {
+      buscarProductos();
+    }
+  };
+
+  return (
+    <nav className="fixed top-0 left-0 w-full bg-purple-200/80 backdrop-blur-md border-b border-white/30 z-50 shadow-md">
+
+      {/* BARRA PRINCIPAL */}
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+
+        {/* LOGO */}
+        <Link to="/" onClick={() => setOpen(false)} className="shrink-0">
           <h1 className="text-2xl md:text-3xl font-serif font-bold text-purple-800 cursor-pointer hover:text-yellow-600 transition">
             TULIPA
           </h1>
         </Link>
 
-        {/* Buscador desktop */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
+        {/* BUSCADOR DESKTOP */}
+        <div className="hidden md:flex flex-1 max-w-md mx-8 min-w-0">
+
           <input
             type="text"
             placeholder="Buscar flores..."
-            className="w-full px-4 py-2 rounded-l-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            onKeyDown={manejarEnter}
+            className="min-w-0 flex-1 px-4 py-2 rounded-l-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/90"
           />
 
-          <button className="bg-purple-500 text-white px-4 py-2 rounded-r-xl hover:bg-purple-600 transition cursor-pointer">
+          <button
+            onClick={buscarProductos}
+            className="shrink-0 bg-purple-500 text-white px-4 py-2 rounded-r-xl hover:bg-purple-600 transition cursor-pointer"
+          >
             Buscar
           </button>
+
         </div>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* DESKTOP */}
+        <div className="hidden md:flex items-center gap-6 shrink-0">
 
           <ul className="flex gap-6 text-purple-800 font-serif">
+
             <li>
               <Link to="/">Inicio</Link>
             </li>
@@ -69,14 +99,16 @@ const Navbar = () => {
             <li>
               <Link to="/contacto">Contacto</Link>
             </li>
+
           </ul>
 
-          {/* Carrito desktop */}
+          {/* CARRITO DESKTOP */}
           <div
             className="relative"
             onMouseEnter={() => setShowCart(true)}
             onMouseLeave={() => setShowCart(false)}
           >
+
             <div className="relative cursor-pointer">
               <span className="text-3xl">🛒</span>
 
@@ -87,7 +119,7 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Dropdown carrito */}
+            {/* DROPDOWN CARRITO */}
             {showCart && (
               <div
                 className="
@@ -101,6 +133,7 @@ const Navbar = () => {
                   z-50
                 "
               >
+
                 <h2 className="text-lg font-bold text-purple-700 mb-4">
                   Tu carrito
                 </h2>
@@ -118,6 +151,7 @@ const Navbar = () => {
                           key={item.id}
                           className="flex items-center gap-3 border-b pb-3"
                         >
+
                           <img
                             src={item.imagen_url}
                             alt={item.nombre}
@@ -125,6 +159,7 @@ const Navbar = () => {
                           />
 
                           <div className="flex-1">
+
                             <h3 className="font-semibold text-sm text-gray-800">
                               {item.nombre}
                             </h3>
@@ -136,9 +171,12 @@ const Navbar = () => {
                             <p className="text-sm font-bold text-purple-700">
                               Q{item.precio * item.cantidad}
                             </p>
+
                           </div>
+
                         </div>
                       ))}
+
                     </div>
 
                     <Link
@@ -150,40 +188,55 @@ const Navbar = () => {
                     </Link>
                   </>
                 )}
+
               </div>
             )}
+
           </div>
+
         </div>
 
-        {/* Botón hamburguesa */}
+        {/* HAMBURGUESA */}
         <button
-          className="md:hidden text-purple-800 text-3xl cursor-pointer"
+          className="md:hidden shrink-0 text-purple-800 text-3xl cursor-pointer"
           onClick={() => setOpen(!open)}
           aria-label="Abrir menú"
         >
           {open ? "✕" : "☰"}
         </button>
+
       </div>
 
-      {/* Menú móvil */}
+      {/* BUSCADOR MÓVIL */}
+      <div className="md:hidden w-full px-4 pb-3 ">
+
+        <div className="w-full flex min-w-0">
+
+          <input
+            type="text"
+            placeholder="Buscar flores..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            onKeyDown={manejarEnter}
+            className="min-w-0 flex-1 w-0 px-4 py-2 rounded-l-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/90"
+          />
+
+          <button
+            onClick={buscarProductos}
+            className="shrink-0 bg-purple-500 hover:bg-purple-600 text-white px-3 sm:px-4 rounded-r-xl transition"
+          >
+            Buscar
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* MENÚ MÓVIL */}
       {open && (
-        <div className="md:hidden bg-purple-100 border-t border-purple-200 shadow-inner px-4 pb-5 max-h-[calc(100vh-70px)] overflow-y-auto">
+        <div className="md:hidden bg-purple-100/80 backdrop-blur-md border-t border-white/30 shadow-inner px-4 pb-5 max-h-[calc(100vh-120px)] overflow-y-auto">
 
-          {/* Buscador móvil */}
-          <div className="flex pt-4 mb-5">
-            <input
-              type="text"
-              placeholder="Buscar flores..."
-              className="min-w-0 flex-1 px-4 py-2 rounded-l-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white"
-            />
-
-            <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 rounded-r-xl transition">
-              Buscar
-            </button>
-          </div>
-
-          {/* Links móvil */}
-          <ul className="flex flex-col gap-4 text-purple-800 font-serif">
+          <ul className="flex flex-col gap-4 text-purple-800 font-serif pt-4">
 
             <li>
               <Link
@@ -265,13 +318,14 @@ const Navbar = () => {
               </Link>
             </li>
 
-            {/* Carrito móvil */}
+            {/* CARRITO MÓVIL */}
             <li>
               <Link
                 to="/carrito"
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2 py-1"
               >
+
                 <span className="text-2xl">🛒</span>
 
                 <span>Carrito</span>
@@ -281,14 +335,18 @@ const Navbar = () => {
                     {totalItems}
                   </span>
                 )}
+
               </Link>
             </li>
 
           </ul>
+
         </div>
       )}
+
     </nav>
   );
 };
 
 export default Navbar;
+

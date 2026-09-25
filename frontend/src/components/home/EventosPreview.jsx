@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
-import { obtenerProductos } from "../../api/productos";
 import { Link } from "react-router-dom";
+import { useProductos } from "../../hooks/useProductos";
 
 const EventosPreview = () => {
 
-  const [destacado, setDestacado] = useState(null);
+  const { productos } = useProductos("Eventos");
 
-  useEffect(() => {
-
-    obtenerProductos("Eventos")
-      .then((productos) => {
-        setDestacado(productos[0]);
-      })
-      .catch((error) => {
-        console.error("Error al obtener eventos:", error);
-      });
-
-  }, []);
+  const destacado = productos[0];
 
   if (!destacado) {
     return null;

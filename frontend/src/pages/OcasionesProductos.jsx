@@ -1,20 +1,15 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { obtenerProductos } from "../api/productos";
 import CardProduct from "../components/CardProduct";
+import EstadoCarga from "../components/EstadoCarga";
+import { useCarrito } from "../context/CarritoContext";
+import { useProductos } from "../hooks/useProductos";
 
 const OcasionesProductos = () => {
   const { ocasion } = useParams();
 
-  const [productos, setProductos] = useState([]);
+  const { agregarAlCarrito } = useCarrito();
 
-  useEffect(() => {
-    obtenerProductos(ocasion)
-      .then(setProductos)
-      .catch((error) => {
-        console.error("Error al obtener productos:", error);
-      });
-  }, [ocasion]);
+  const { productos, cargando, error, reintentar } = useProductos(ocasion);
 
   return (
     <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
@@ -23,14 +18,22 @@ const OcasionesProductos = () => {
         {ocasion}
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {productos.map((producto) => (
-          <CardProduct
-            key={producto.id}
-            producto={producto}
-          />
-        ))}
-      </div>
+      <EstadoCarga
+        cargando={cargando}
+        error={error}
+        vacio={productos.length === 0}
+        onReintentar={reintentar}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {productos.map((producto) => (
+            <CardProduct
+              key={producto.id}
+              producto={producto}
+              agregarAlCarrito={agregarAlCarrito}
+            />
+          ))}
+        </div>
+      </EstadoCarga>
 
     </div>
   );

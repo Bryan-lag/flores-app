@@ -1,35 +1,19 @@
-import { obtenerProductos } from "../../api/productos";
-import { useEffect, useState } from "react";
 import CardArreglos from "../CardArreglos";
 import { Link } from "react-router-dom";
 import { useCarrito } from "../../context/CarritoContext";
+import { useProductos } from "../../hooks/useProductos";
 
 const ArreglosPreview = () => {
 
   const { agregarAlCarrito } = useCarrito();
-  const [arreglos, setArreglos] = useState([]);
-
-  useEffect(() => {
-
-    const cargarArreglos = async () => {
-      try {
-
-        const data = await obtenerProductos("Arreglos");
-
-        if (Array.isArray(data)) {
-          setArreglos(data);
-        }
-
-      } catch (error) {
-        console.error("Error al obtener arreglos:", error);
-      }
-    };
-
-    cargarArreglos();
-
-  }, []);
+  const { productos: arreglos } = useProductos("Arreglos");
 
   const preview = arreglos.slice(0, 3);
+
+  
+  if (preview.length === 0) {
+    return null;
+  }
 
   return (
     <section className="w-full py-16">

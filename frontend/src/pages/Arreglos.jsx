@@ -1,37 +1,13 @@
-import { useEffect, useState } from "react";
-import { obtenerProductos } from "../api/productos";
 import CardArreglos from "../components/CardArreglos";
+import EstadoCarga from "../components/EstadoCarga";
 import { useCarrito } from "../context/CarritoContext";
+import { useProductos } from "../hooks/useProductos";
 
 const Arreglos = () => {
 
-  const {
-    agregarAlCarrito
-  } = useCarrito();
+  const { agregarAlCarrito } = useCarrito();
 
-  const [arreglos, setArreglos] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let activo = true;
-
-    obtenerProductos("Arreglos")
-      .then((data) => {
-        if (activo) setArreglos(data);
-      })
-      .catch((err) => {
-        console.error("Error al cargar arreglos:", err);
-        if (activo) setError("No se pudieron cargar los arreglos.");
-      })
-      .finally(() => {
-        if (activo) setCargando(false);
-      });
-
-    return () => {
-      activo = false;
-    };
-  }, []);
+  const { productos, cargando, error, reintentar } = useProductos("Arreglos");
 
   return (
     <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
@@ -42,14 +18,15 @@ const Arreglos = () => {
       </h1>
 
       {/* GRID DE PRODUCTOS */}
-      {cargando ? (
-        <p className="text-center text-gray-500">Cargando...</p>
-      ) : error ? (
-        <p className="text-center text-gray-500">{error}</p>
-      ) : (
+      <EstadoCarga
+        cargando={cargando}
+        error={error}
+        vacio={productos.length === 0}
+        onReintentar={reintentar}
+      >
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
 
-          {arreglos.map((producto) => (
+          {productos.map((producto) => (
             <CardArreglos
               key={producto.id}
               producto={producto}
@@ -58,7 +35,7 @@ const Arreglos = () => {
           ))}
 
         </div>
-      )}
+      </EstadoCarga>
 
     </div>
   );

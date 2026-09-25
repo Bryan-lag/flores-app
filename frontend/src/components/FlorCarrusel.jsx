@@ -1,27 +1,20 @@
-import { useState, useEffect } from "react";
-import { obtenerProductos } from "../api/productos";
+import { useState } from "react";
+import { useProductos } from "../hooks/useProductos";
 
 const FlorCarrusel = () => {
     const [index, setIndex] = useState(0);
-    const [productos, setProductos] = useState([]);
-
-    useEffect(() => {
-        const cargarProductos = async () => {
-            try {
-                const data = await obtenerProductos("Ramos");
-                setProductos(data);
-            } catch (error) {
-                console.error("Error al obtener los ramos:", error);
-            }
-        };
-
-        cargarProductos();
-    }, []);
+    const { productos, cargando, error } = useProductos("Ramos");
 
     if (productos.length === 0) {
         return (
-            <div className="w-full max-w-125 aspect-square flex items-center justify-center">
-                <p className="text-gray-500">Cargando...</p>
+            <div className="w-full max-w-125 aspect-square flex items-center justify-center text-center px-6">
+                <p className="text-gray-500">
+                    {cargando
+                        ? "Cargando..."
+                        : error
+                        ? "No pudimos cargar los ramos por ahora."
+                        : "Pronto tendremos ramos para ti."}
+                </p>
             </div>
         );
     }

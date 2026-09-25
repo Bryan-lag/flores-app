@@ -1,8 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-    baseURL: "http://127.0.0.1:8000",
-});
+import api from "./client";
 
 export const obtenerProductos = async (categoria) => {
     const response = await api.get("/productos/", {
@@ -29,6 +25,4 @@ export const actualizarProducto = async (id, producto) => {
 
 export const eliminarProducto = async (id) => {
     await api.delete(`/productos/${id}`);
-};
-
-export default api;
+}

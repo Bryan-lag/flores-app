@@ -1,26 +1,14 @@
-import { obtenerProductos } from "../../api/productos";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useProductos } from "../../hooks/useProductos";
 
 const FunebresPreview = () => {
 
-  const [destacado, setDestacado] = useState(null);
+  const { productos } = useProductos("Funebres");
 
-  useEffect(() => {
-
-    obtenerProductos("Funebres")
-      .then((productos) => {
-        console.log("FUNEBRES DESDE API:", productos);
-        setDestacado(productos[0]);
-      })
-      .catch((error) => {
-        console.error("ERROR FUNEBRES:", error);
-      });
-
-  }, []);
+  const destacado = productos[0];
 
   if (!destacado) {
-    return <p>Cargando Funebres...</p>;
+    return null;
   }
 
   return (

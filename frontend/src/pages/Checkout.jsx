@@ -1,7 +1,21 @@
 import { useState } from "react";
-import axios from "axios";
+import { Link, Navigate } from "react-router-dom";
+import { crearPedido } from "../api/pedidos";
 
 import { useCarrito } from "../context/CarritoContext";
+
+
+const mensajeDeError = (error) => {
+  if (!error.response) {
+    return "No pudimos conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.";
+  }
+
+  const detalle = error.response.data?.detail;
+
+  return typeof detalle === "string"
+    ? detalle
+    : "Revisa los datos del formulario e inténtalo de nuevo.";
+};
 
 const Checkout = () => {
   const { carrito, total, vaciarCarrito } = useCarrito();
@@ -26,47 +40,48 @@ const Checkout = () => {
     });
   };
 
-  const crearMensajeWhatsApp = (pedidoId) => {
-    const productos = carrito
+  // Recibe una "foto" del pedido (id, items y total) para no depender
+  // del carrito, que se vacía apenas se confirma el pedido.
+  const crearMensajeWhatsApp = ({ id, items, total }) => {
+    const productos = items
       .map(
         (item) =>
-          `• ${item.nombre} x${item.cantidad} - Q${
-            item.precio * item.cantidad
-          }`
+          `• ${item.nombre} x${item.cantidad} - Q${item.precio * item.cantidad}`
       )
       .join("\n");
 
-    const mensaje = `
-      Hola, quiero confirmar mi pedido en TULIPA 
-
-      *Pedido #${pedidoId}*
-
-      *Cliente:* ${formulario.nombre_cliente}
-      *Teléfono:* ${formulario.telefono}
-
-      *Dirección:*
-      ${formulario.direccion}
-
-      *Referencia:*
-      ${formulario.referencia || "No especificada"}
-
-      *Productos:*
-      ${productos}
-
-      *Total: Q${total}*
-
-      ¡Gracias!
-      `;
-
-    return mensaje;
+    return [
+      "Hola, quiero confirmar mi pedido en TULIPA",
+      "",
+      `*Pedido #${id}*`,
+      "",
+      `*Cliente:* ${formulario.nombre_cliente}`,
+      `*Teléfono:* ${formulario.telefono}`,
+      "",
+      "*Dirección:*",
+      formulario.direccion,
+      "",
+      "*Referencia:*",
+      formulario.referencia || "No especificada",
+      "",
+      "*Productos:*",
+      productos,
+      "",
+      `*Total: Q${total}*`,
+      "",
+      "¡Gracias!",
+    ].join("\n");
   };
 
-  
+  const abrirWhatsApp = (pedido) => {
+    const numeroWhatsApp = import.meta.env.VITE_WHATSAPP_NUMBER;
 
-  const abrirWhatsApp = (pedidoId) => {
-    const numeroWhatsApp = import.meta.env.VITE_WHATSAPP_NUMBER; 
+    if (!numeroWhatsApp) {
+      console.error("Falta VITE_WHATSAPP_NUMBER en el archivo .env.local");
+      return;
+    }
 
-    const mensaje = crearMensajeWhatsApp(pedidoId);
+    const mensaje = crearMensajeWhatsApp(pedido);
 
     const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(
       mensaje
@@ -90,32 +105,26 @@ const Checkout = () => {
         })),
       };
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/pedidos/",
-        pedido
-      );
+      const data = await crearPedido(pedido);
 
-      console.log("Pedido creado:", response.data);
+      // Foto del pedido: el total es el que calculó el servidor
+      const pedidoConfirmado = {
+        id: data.pedido_id,
+        items: carrito,
+        total: data.total,
+      };
 
-      const pedidoId = response.data.pedido_id;
-
-      // Guardamos la información del pedido creado
-      setPedidoCreado({
-        id: pedidoId,
-      });
+      setPedidoCreado(pedidoConfirmado);
 
       // El pedido ya fue guardado correctamente
       vaciarCarrito();
 
       // Abrimos WhatsApp después de crear el pedido
-      abrirWhatsApp(pedidoId);
+      abrirWhatsApp(pedidoConfirmado);
     } catch (error) {
       console.error(error);
 
-      setError(
-        error.response?.data?.detail ||
-          "Ocurrió un error al crear el pedido."
-      );
+      setError(mensajeDeError(error));
     } finally {
       setCargando(false);
     }
@@ -124,7 +133,7 @@ const Checkout = () => {
   // PANTALLA DE CONFIRMACIÓN
   if (pedidoCreado) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 pt-20 pb-10 bg-pink-50">
+      <div className="min-h-screen flex items-center justify-center px-4 pt-36 md:pt-24  pb-10 bg-pink-50">
         <div className="w-full max-w-2xl bg-white rounded-3xl shadow-lg p-8 md:p-12 text-center">
 
           {/* ICONO */}
@@ -163,21 +172,26 @@ const Checkout = () => {
 
           {/* SEGUIR COMPRANDO */}
           <div>
-            <a
-              href="/"
+            <Link
+              to="/"
               className="inline-block text-purple-700 hover:text-purple-900 font-semibold transition"
             >
               ← Seguir comprando
-            </a>
+            </Link>
           </div>
 
         </div>
       </div>
     );
   }
-
+  
+  // Sin productos no hay nada que confirmar
+  if (carrito.length === 0) {
+    return <Navigate to="/carrito" replace />;
+  }
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
+    
+    <div className="max-w-6xl mx-auto px-4 pt-36 md:pt-24 pb-10">
 
       <h1 className="text-3xl md:text-4xl font-serif font-bold text-purple-800 mb-8">
         Finalizar pedido

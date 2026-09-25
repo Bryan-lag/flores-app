@@ -1,48 +1,42 @@
-import { useEffect, useState } from "react";
-import { obtenerProductos } from "../api/productos";
 import CardEventos from "../components/CardEventos";
+import EstadoCarga from "../components/EstadoCarga";
 import { useCarrito } from "../context/CarritoContext";
+import { useProductos } from "../hooks/useProductos";
 
 const Eventos = () => {
 
-     const [eventos, setEventos] = useState([]);
+  const { agregarAlCarrito } = useCarrito();
 
-     useEffect(() => {
+  const { productos, cargando, error, reintentar } = useProductos("Eventos");
 
-          obtenerProductos("Eventos")
-               .then(setEventos)
-               .catch((error) => {
-                    console.error("Error al obtener productos de eventos:", error);
-               });
+  return (
+    <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
 
-     }, []);
+      <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">
+        Eventos para toda ocasión
+      </h1>
 
-     const {
-          agregarAlCarrito
-     } = useCarrito();
+      <EstadoCarga
+        cargando={cargando}
+        error={error}
+        vacio={productos.length === 0}
+        onReintentar={reintentar}
+      >
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
 
-     return (
-          <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
+          {productos.map((evento) => (
+            <CardEventos
+              key={evento.id}
+              producto={evento}
+              agregarAlCarrito={agregarAlCarrito}
+            />
+          ))}
 
-               <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">
-                    Eventos para toda ocasión
-               </h1>
+        </div>
+      </EstadoCarga>
 
-               <div className="grid grid-cols-2  md:grid-cols-3 gap-6">
-
-                    {eventos.map((evento) => (
-                         <CardEventos
-                              key={evento.id}
-                              producto={evento}
-                              agregarAlCarrito={agregarAlCarrito}
-                         />
-                    ))}
-
-               </div>
-
-            
-          </div>
-     );
+    </div>
+  );
 };
 
 export default Eventos;

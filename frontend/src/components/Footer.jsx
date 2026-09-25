@@ -139,7 +139,7 @@ const Footer = () => {
               </p>
 
               <p>
-                ✉️ contacto@tulipa.com
+                ✉️ tulipa@gmail.com
               </p>
 
             </div>
