@@ -15,6 +15,9 @@ import ProductoDetalle from "./pages/ProductoDetalle";
 import Checkout from "./pages/Checkout.jsx";
 import Footer from "./components/Footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import AdminLogin from "./pages/admin/Login.jsx";
+import AdminPedidos from "./pages/admin/Pedidos.jsx";
+import RutaProtegida from "./components/RutaProtegida.jsx";
 
 function App() {
   return (
@@ -37,6 +40,16 @@ function App() {
         <Route path="/ocasiones/:ocasion" element={<OcasionesProductos/>} />
         <Route path="/productos/:id" element={<ProductoDetalle />} />
         <Route path="/checkout" element={<Checkout />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+          path="/admin/pedidos"
+          element={
+            <RutaProtegida>
+              <AdminPedidos />
+            </RutaProtegida>
+          }
+        />
+      
 s      </Routes>
 
       <Footer />

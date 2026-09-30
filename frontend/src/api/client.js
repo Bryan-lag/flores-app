@@ -10,9 +10,20 @@ if (!API_URL) {
 const api = axios.create({
      baseURL: API_URL,
      // Si el servidor no responde en 15 s, se corta con error
-     // en lugar de dejar la pantalla cargando para siempre.
      timeout: 15000
 })
+
+// Adjunta el token de administrador a toda petición, si existe.
+// Las rutas públicas simplemente ignoran este header.
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("admin_token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
 
 
 export default api;
