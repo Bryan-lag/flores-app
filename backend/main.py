@@ -7,6 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import init_db
 from routers.productos import router as productos_router
 from routers.pedidos import router as pedidos_router
+from routers.admin import router as admin_router
+from routers.productos import router as productos_router
+from routers.pedidos import router as pedidos_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -27,6 +30,9 @@ app.include_router(productos_router)
 
 # Rutas de pedidos
 app.include_router(pedidos_router)
+
+# Rutas de administrador
+app.include_router(admin_router)
 
 
 

@@ -3,6 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlmodel import Session, select
 
+from auth import admin_requerido
 from database import get_session
 from models import Producto
 from schemas.producto import (
@@ -80,7 +81,8 @@ def obtener_producto(
 )
 def crear_producto(
     producto: ProductoCreate,
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    admin=Depends(admin_requerido)
 ):
     """
     Crea un nuevo producto en la base de datos.
@@ -101,7 +103,8 @@ def crear_producto(
 def actualizar_producto(
     producto_id: int,
     datos: ProductoUpdate,
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    admin=Depends(admin_requerido)
 ):
     """
     Actualiza un producto existente en la base de datos.
@@ -136,7 +139,8 @@ def actualizar_producto(
 )
 def eliminar_producto(
     producto_id: int,
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
+    admin=Depends(admin_requerido)
 ):
     """
     Elimina un producto de la base de datos.

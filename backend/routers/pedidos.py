@@ -1,9 +1,24 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 
+from auth import admin_requerido
 from database import get_session
 from models import Pedido, DetallePedido, Producto
-from schemas.pedido import PedidoCreate
+from schemas.pedido import (
+    PedidoCreate,
+    PedidoRead,
+    DetallePedidoRead,
+    EstadoUpdate,
+)
+
+
+ESTADOS_VALIDOS = {
+    "pendiente",
+    "confirmado",
+    "en_camino",
+    "entregado",
+    "cancelado",
+}
 
 
 router = APIRouter(
@@ -111,3 +126,82 @@ def crear_pedido(
         "pedido_id": nuevo_pedido.id,
         "total": total
     }
+    
+    
+def _pedido_a_read(session: Session, pedido: Pedido) -> PedidoRead:
+    """Arma un PedidoRead con el nombre de cada producto del detalle."""
+    detalles = session.exec(
+        select(DetallePedido).where(DetallePedido.pedido_id == pedido.id)
+    ).all()
+
+    items = []
+
+    for detalle in detalles:
+        producto = session.get(Producto, detalle.producto_id)
+
+        items.append(
+            DetallePedidoRead(
+                producto_id=detalle.producto_id,
+                producto_nombre=producto.nombre if producto else "Producto eliminado",
+                cantidad=detalle.cantidad,
+                precio_unitario=detalle.precio_unitario,
+            )
+        )
+
+    return PedidoRead(
+        id=pedido.id,
+        nombre_cliente=pedido.nombre_cliente,
+        telefono=pedido.telefono,
+        direccion=pedido.direccion,
+        referencia=pedido.referencia,
+        total=pedido.total,
+        estado=pedido.estado,
+        detalles=items,
+    )
+
+
+@router.get("/", response_model=list[PedidoRead])
+def listar_pedidos(
+    session: Session = Depends(get_session),
+    admin=Depends(admin_requerido),
+):
+    """
+    Lista todos los pedidos, del más reciente al más antiguo, con su
+    detalle de productos. Solo para administradores.
+    """
+    pedidos = session.exec(
+        select(Pedido).order_by(Pedido.id.desc())
+    ).all()
+
+    return [_pedido_a_read(session, pedido) for pedido in pedidos]
+
+
+@router.patch("/{pedido_id}/estado", response_model=PedidoRead)
+def actualizar_estado_pedido(
+    pedido_id: int,
+    datos: EstadoUpdate,
+    session: Session = Depends(get_session),
+    admin=Depends(admin_requerido),
+):
+    """
+    Cambia el estado de un pedido (pendiente, confirmado, en_camino,
+    entregado o cancelado). Solo para administradores.
+    """
+    if datos.estado not in ESTADOS_VALIDOS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Estado inválido. Debe ser uno de: {', '.join(sorted(ESTADOS_VALIDOS))}"
+        )
+
+    pedido = session.get(Pedido, pedido_id)
+
+    if not pedido:
+        raise HTTPException(status_code=404, detail="Pedido no encontrado")
+
+    pedido.estado = datos.estado
+
+    session.add(pedido)
+    session.commit()
+    session.refresh(pedido)
+
+    return _pedido_a_read(session, pedido)
