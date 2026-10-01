@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import { EMAIL_CONTACTO, UBICACION, REDES_SOCIALES } from "../config/contacto";
+import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
+
+const NUMERO_WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMBER;
 
 const Footer = () => {
   return (
@@ -31,46 +35,31 @@ const Footer = () => {
 
             <ul className="space-y-3 text-sm text-purple-100">
               <li>
-                <Link
-                  to="/"
-                  className="hover:text-white transition"
-                >
+                <Link to="/" className="hover:text-white transition">
                   Inicio
                 </Link>
               </li>
 
               <li>
-                <Link
-                  to="/catalogo"
-                  className="hover:text-white transition"
-                >
+                <Link to="/catalogo" className="hover:text-white transition">
                   Catálogo
                 </Link>
               </li>
 
               <li>
-                <Link
-                  to="/ocasiones"
-                  className="hover:text-white transition"
-                >
+                <Link to="/ocasiones" className="hover:text-white transition">
                   Ocasiones
                 </Link>
               </li>
 
               <li>
-                <Link
-                  to="/eventos"
-                  className="hover:text-white transition"
-                >
+                <Link to="/eventos" className="hover:text-white transition">
                   Eventos
                 </Link>
               </li>
 
               <li>
-                <Link
-                  to="/contacto"
-                  className="hover:text-white transition"
-                >
+                <Link to="/contacto" className="hover:text-white transition">
                   Contacto
                 </Link>
               </li>
@@ -85,37 +74,25 @@ const Footer = () => {
 
             <ul className="space-y-3 text-sm text-purple-100">
               <li>
-                <Link
-                  to="/productos"
-                  className="hover:text-white transition"
-                >
+                <Link to="/productos" className="hover:text-white transition">
                   Ramos
                 </Link>
               </li>
 
               <li>
-                <Link
-                  to="/arreglos"
-                  className="hover:text-white transition"
-                >
+                <Link to="/arreglos" className="hover:text-white transition">
                   Arreglos
                 </Link>
               </li>
 
               <li>
-                <Link
-                  to="/funebre"
-                  className="hover:text-white transition"
-                >
+                <Link to="/funebre" className="hover:text-white transition">
                   Arreglos fúnebres
                 </Link>
               </li>
 
               <li>
-                <Link
-                  to="/eventos"
-                  className="hover:text-white transition"
-                >
+                <Link to="/eventos" className="hover:text-white transition">
                   Eventos
                 </Link>
               </li>
@@ -130,16 +107,22 @@ const Footer = () => {
 
             <div className="space-y-3 text-sm text-purple-100">
 
+              <a
+                href={`https://wa.me/${NUMERO_WHATSAPP}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-white"
+              >
+                <FaWhatsapp className="text-xl" />
+                WhatsApp
+              </a>
+
               <p>
-                📱 WhatsApp
+                📍 {UBICACION}
               </p>
 
               <p>
-                📍 Guatemala
-              </p>
-
-              <p>
-                ✉️ tulipa@gmail.com
+                ✉️ {EMAIL_CONTACTO}
               </p>
 
             </div>
@@ -148,22 +131,29 @@ const Footer = () => {
             <div className="flex gap-4 mt-6">
 
               <a
-                href="#"
+                href={REDES_SOCIALES.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hover:text-purple-300 transition"
                 aria-label="Facebook"
               >
-                Facebook
+                <FaFacebook className="text-xl" />
+                
               </a>
 
               <a
-                href="#"
+                href={REDES_SOCIALES.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hover:text-purple-300 transition"
                 aria-label="Instagram"
               >
-                Instagram
+                <FaInstagram className="text-xl" />
+                
               </a>
 
             </div>
+
           </div>
 
         </div>
@@ -183,6 +173,16 @@ const Footer = () => {
 
           </div>
 
+          {/* Acceso administrativo discreto */}
+          <div className="text-center mt-5">
+            <Link
+              to="/admin/login"
+              className="text-xs text-purple-400 hover:text-purple-200 transition"
+            >
+              Administración
+            </Link>
+          </div>
+
         </div>
 
       </div>
@@ -191,3 +191,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

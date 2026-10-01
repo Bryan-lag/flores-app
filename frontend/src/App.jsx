@@ -18,10 +18,12 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import AdminLogin from "./pages/admin/Login.jsx";
 import AdminPedidos from "./pages/admin/Pedidos.jsx";
 import RutaProtegida from "./components/RutaProtegida.jsx";
+import TopBar from "./components/TopBar.jsx";
 
 function App() {
   return (
     <>
+      <TopBar />
       <Navbar />
       <ScrollToTop />
 

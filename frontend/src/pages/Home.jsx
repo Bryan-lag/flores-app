@@ -23,32 +23,35 @@ const Home = () => {
         {/* GLOW 2 */}
         <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-400/30 rounded-full blur-3xl"></div>
 
-        {/* HERO CONTENT */}
-        <section className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-screen max-w-6xl mx-auto px-4 md:px-8 pt-24 gap-10">
+        
+      {/* HERO CONTENT */}
+      <section className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-screen max-w-6xl mx-auto px-4 md:px-8 pt-24 gap-10">
 
-          {/* DETALLES */}
-          <div className="w-full md:w-1/2">
+        {/* DETALLES */}
+        <div className="w-full md:w-1/2 order-2 md:order-1">
 
-            <div className="backdrop-blur-xl bg-white/20 border border-white/30 shadow-2xl shadow-violet-300/20 rounded-3xl p-8">
+          <div className="backdrop-blur-xl bg-white/20 border border-white/30 shadow-2xl shadow-violet-300/20 rounded-3xl p-8">
 
-              <Detalles />
-
-            </div>
-
-          </div>
-
-          {/* CARRUSEL */}
-          <div className="w-full md:w-1/2 flex justify-center">
-
-            <div className="backdrop-blur-xl bg-white/20 border border-white/30 shadow-2xl shadow-purple-300/20 rounded-3xl p-6">
-
-              <FlorCarrusel />
-
-            </div>
+            <Detalles />
 
           </div>
 
-        </section>
+        </div>
+
+        {/* CARRUSEL */}
+        <div className="w-full md:w-1/2 flex justify-center order-1 md:order-2">
+
+          <div className="backdrop-blur-xl bg-white/20 border border-white/30 shadow-2xl shadow-purple-300/20 rounded-3xl p-6">
+
+            <FlorCarrusel />
+
+          </div>
+
+        </div>
+
+      </section>
+
+
 
       </div>
 

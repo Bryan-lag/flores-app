@@ -1,6 +1,59 @@
+import { useState } from "react";
+import { EMAIL_CONTACTO, UBICACION } from "../config/contacto";
+import {FaWhatsapp} from "react-icons/fa";
 
+const NUMERO_WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMBER;
+
+const FORMULARIO_VACIO = {
+  nombre: "",
+  correo: "",
+  asunto: "",
+  mensaje: "",
+};
 
 const Contacto = () => {
+  const [formulario, setFormulario] = useState(FORMULARIO_VACIO);
+  const [error, setError] = useState("");
+  const [enviado, setEnviado] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormulario((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!NUMERO_WHATSAPP) {
+      setError(
+        "No podemos enviar el mensaje en este momento. Escríbenos directamente por WhatsApp o correo."
+      );
+      return;
+    }
+
+    const mensaje = [
+      "Hola, tengo un mensaje desde el sitio de TULIPA",
+      "",
+      `*Nombre:* ${formulario.nombre}`,
+      formulario.correo && `*Correo:* ${formulario.correo}`,
+      formulario.asunto && `*Asunto:* ${formulario.asunto}`,
+      "",
+      formulario.mensaje,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(
+      mensaje
+    )}`;
+
+    window.open(url, "_blank");
+
+    setError("");
+    setEnviado(true);
+    setFormulario(FORMULARIO_VACIO);
+  };
+
   return (
     <div className="min-h-screen bg-stone-50 pt-24 pb-16">
 
@@ -56,9 +109,7 @@ const Contacto = () => {
               <div className="flex items-start gap-4">
 
                 <div className="shrink-0 w-12 h-12 rounded-full bg-green-50 flex items-center justify-center">
-                  <span className="text-green-600 text-xl">
-                    ☎
-                  </span>
+                  <FaWhatsapp className="text-green-600 text-xl" />
                 </div>
 
                 <div>
@@ -71,9 +122,18 @@ const Contacto = () => {
                     productos y pedidos.
                   </p>
 
-                  <p className="mt-3 text-purple-700 font-semibold">
-                    +502 5555-1113
-                  </p>
+                  {NUMERO_WHATSAPP ? (
+                    <a
+                      href={`https://wa.me/${NUMERO_WHATSAPP}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-block text-purple-700 font-semibold hover:text-purple-900 transition"
+                    >
+                      +{NUMERO_WHATSAPP}
+                    </a>
+                  ) : (
+                    <p className="mt-3 text-gray-400">No disponible</p>
+                  )}
                 </div>
 
               </div>
@@ -100,9 +160,12 @@ const Contacto = () => {
                     También puedes enviarnos tus consultas por correo.
                   </p>
 
-                  <p className="mt-3 text-purple-700 font-semibold">
-                    tulipa@gmail.com
-                  </p>
+                  <a
+                    href={`mailto:${EMAIL_CONTACTO}`}
+                    className="mt-3 inline-block text-purple-700 font-semibold hover:text-purple-900 transition"
+                  >
+                    {EMAIL_CONTACTO}
+                  </a>
                 </div>
 
               </div>
@@ -126,7 +189,7 @@ const Contacto = () => {
                   </h3>
 
                   <p className="text-gray-600">
-                    Ciudad de Guatemala, Guatemala
+                    {UBICACION}
                   </p>
                 </div>
 
@@ -153,18 +216,43 @@ const Contacto = () => {
               </p>
             </div>
 
+            {enviado && (
+              <p
+                role="status"
+                className="mb-5 rounded-xl bg-green-50 border border-green-200 text-green-700 px-4 py-3 text-sm"
+              >
+                Se abrió WhatsApp con tu mensaje listo para enviar.
+              </p>
+            )}
 
-            <form className="space-y-5">
+            {error && (
+              <p
+                role="alert"
+                className="mb-5 rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm"
+              >
+                {error}
+              </p>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-5">
 
               {/* Nombre */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="nombre"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Nombre
                 </label>
 
                 <input
+                  id="nombre"
+                  name="nombre"
                   type="text"
                   placeholder="Tu nombre"
+                  value={formulario.nombre}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition"
                 />
               </div>
@@ -172,13 +260,20 @@ const Contacto = () => {
 
               {/* Correo */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="correo"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Correo electrónico
                 </label>
 
                 <input
+                  id="correo"
+                  name="correo"
                   type="email"
                   placeholder="tu@email.com"
+                  value={formulario.correo}
+                  onChange={handleChange}
                   className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition"
                 />
               </div>
@@ -186,13 +281,20 @@ const Contacto = () => {
 
               {/* Asunto */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="asunto"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Asunto
                 </label>
 
                 <input
+                  id="asunto"
+                  name="asunto"
                   type="text"
                   placeholder="¿En qué podemos ayudarte?"
+                  value={formulario.asunto}
+                  onChange={handleChange}
                   className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition"
                 />
               </div>
@@ -200,13 +302,21 @@ const Contacto = () => {
 
               {/* Mensaje */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="mensaje"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Mensaje
                 </label>
 
                 <textarea
+                  id="mensaje"
+                  name="mensaje"
                   rows="5"
                   placeholder="Escribe tu mensaje..."
+                  value={formulario.mensaje}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition resize-none"
                 ></textarea>
               </div>
@@ -214,7 +324,7 @@ const Contacto = () => {
 
               {/* Botón */}
               <button
-                type="button"
+                type="submit"
                 className="w-full bg-purple-700 text-white cursor-pointer py-3.5 rounded-xl font-medium hover:bg-purple-800 hover:shadow-lg transition duration-300"
               >
                 Enviar mensaje
