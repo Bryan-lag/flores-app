@@ -3,19 +3,18 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlmodel import Session, text
 
-from database import init_db
-from routers.productos import router as productos_router
-from routers.pedidos import router as pedidos_router
+from database import engine
 from routers.admin import router as admin_router
 from routers.productos import router as productos_router
 from routers.pedidos import router as pedidos_router
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Crear tablas al iniciar la aplicación
-    init_db()
-
+    # El esquema de la base de datos lo crea/actualiza Alembic
+    # ("alembic upgrade head"), no la aplicación al arrancar.
     yield
 
 
@@ -65,7 +64,14 @@ def root():
 
 @app.get("/health")
 def health():
+    try:
+        with Session(engine) as session:
+            session.exec(text("SELECT 1"))
+        database_status = "ready"
+    except Exception:
+        database_status = "unreachable"
+
     return {
-        "status": "ok",
-        "database": "ready"
+        "status": "ok" if database_status == "ready" else "degraded",
+        "database": database_status
     }
