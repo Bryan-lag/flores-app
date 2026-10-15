@@ -12,7 +12,7 @@ const Carrito = () => {
   } = useCarrito();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-36 md:pt-24">
+    <div className="max-w-6xl mx-auto px-4 pt-8">
 
       <h1 className="text-3xl md:text-4xl font-serif font-bold text-purple-800 mb-8">
         Tu carrito 

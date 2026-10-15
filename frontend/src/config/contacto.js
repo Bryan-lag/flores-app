@@ -1,4 +1,4 @@
-export const EMAIL_CONTACTO = "tu-correo-real@gmail.com";
+export const EMAIL_CONTACTO = "tulipa@gmail.com";
 
 export const UBICACION = "Ciudad de Guatemala, Guatemala";
 

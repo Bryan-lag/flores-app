@@ -72,7 +72,7 @@ const AdminPedidos = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 pt-36 md:pt-24 pb-10">
+    <div className="max-w-5xl mx-auto px-4 pt-8 pb-10">
 
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl md:text-3xl font-bold">Pedidos</h1>

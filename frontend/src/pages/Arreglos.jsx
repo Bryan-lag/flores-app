@@ -10,7 +10,7 @@ const Arreglos = () => {
   const { productos, cargando, error, reintentar } = useProductos("Arreglos");
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
+    <div className="max-w-6xl mx-auto px-4 pt-8 pb-10">
 
       {/* TITULO */}
       <h1 className="text-3xl font-bold mb-8 text-center">

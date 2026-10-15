@@ -30,7 +30,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-8 left-0 w-full bg-purple-200/80 backdrop-blur-md border-b border-white/30 z-50 shadow-md">
+    <nav className="w-full bg-purple-200/80 backdrop-blur-md border-b border-white/30 shadow-md">
 
       {/* BARRA PRINCIPAL */}
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">

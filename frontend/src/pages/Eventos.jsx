@@ -10,7 +10,7 @@ const Eventos = () => {
   const { productos, cargando, error, reintentar } = useProductos("Eventos");
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
+    <div className="max-w-6xl mx-auto px-4 pt-8 pb-10">
 
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">
         Eventos para toda ocasión

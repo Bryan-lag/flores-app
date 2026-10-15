@@ -15,7 +15,7 @@ const Productos = () => {
   const { productos, cargando, error, reintentar } = useProductos(categoria);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-24 pb-10">
+    <div className="max-w-6xl mx-auto px-4 pt-8 pb-10">
 
       <div className="relative w-full h-40 md:h-52 overflow-hidden rounded-3xl mb-10 shadow-2xl">
 

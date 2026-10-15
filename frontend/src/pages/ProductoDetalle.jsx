@@ -4,7 +4,6 @@ import { useProducto } from "../hooks/useProductos";
 import { useCarrito } from "../context/CarritoContext";
 
 const ProductoDetalle = () => {
-
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -13,24 +12,31 @@ const ProductoDetalle = () => {
 
     const { agregarAlCarrito } = useCarrito();
 
+    // Estado de carga
     if (cargando) {
         return (
-            <div className="pt-36 md:pt-24 text-center">
-                <p role="status" className="text-gray-500">Cargando producto...</p>
+            <div className="py-16 text-center">
+                <p role="status" className="text-gray-500">
+                    Cargando producto...
+                </p>
             </div>
         );
     }
 
+    // Producto no encontrado
     if (noEncontrado) {
         return (
-            <div className="pt-36 md:pt-24 pb-10 text-center px-4">
+            <div className="pt-8 pb-10 text-center px-4">
                 <div className="text-5xl mb-4">🥀</div>
+
                 <h1 className="text-2xl font-bold text-gray-800 mb-2">
                     Este producto no existe
                 </h1>
+
                 <p className="text-gray-600 mb-6">
                     Puede que ya no esté disponible.
                 </p>
+
                 <Link
                     to="/catalogo"
                     className="inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition"
@@ -41,11 +47,19 @@ const ProductoDetalle = () => {
         );
     }
 
+    // Error al cargar el producto
     if (error) {
         return (
-            <div role="alert" className="pt-36 md:pt-24 pb-10 text-center px-4">
+            <div
+                role="alert"
+                className="pt-8 pb-10 text-center px-4"
+            >
                 <div className="text-5xl mb-4">🥀</div>
-                <p className="text-gray-700 mb-5">{error}</p>
+
+                <p className="text-gray-700 mb-5">
+                    {error}
+                </p>
+
                 <button
                     onClick={reintentar}
                     className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl font-semibold transition cursor-pointer"
@@ -75,16 +89,16 @@ const ProductoDetalle = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-36 md:pt-24 pb-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-10">
 
+            {/* Volver */}
             <button
-                    onClick={() => navigate(-1)}
-                    className="inline-flex items-center text-purple-700 hover:text-yellow-600 font-semibold mb-6 transition cursor-pointer"
-                >
-                    Volver
+                onClick={() => navigate(-1)}
+                className="inline-flex items-center text-purple-700 hover:text-yellow-600 font-semibold mb-6 transition cursor-pointer"
+            >
+                Volver
             </button>
 
-           
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
 
                 {/* Imagen */}
@@ -122,7 +136,9 @@ const ProductoDetalle = () => {
                     {/* Stock */}
                     <p
                         className={`mt-5 text-sm ${
-                            agotado ? "text-red-500 font-semibold" : "text-gray-500"
+                            agotado
+                                ? "text-red-500 font-semibold"
+                                : "text-gray-500"
                         }`}
                     >
                         {agotado
@@ -147,7 +163,7 @@ const ProductoDetalle = () => {
 
                         <button
                             onClick={aumentarCantidad}
-                            disabled={cantidad === producto.stock}
+                            disabled={agotado || cantidad >= producto.stock}
                             className="w-10 h-10 rounded-full bg-gray-200 text-xl font-semibold hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition"
                         >
                             +
@@ -173,3 +189,4 @@ const ProductoDetalle = () => {
 };
 
 export default ProductoDetalle;
+

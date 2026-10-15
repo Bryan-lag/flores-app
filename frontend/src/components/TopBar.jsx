@@ -2,7 +2,7 @@
 
 const TopBar = () => {
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 h-8 bg-purple-800 text-white text-xs sm:text-sm">
+    <div className="h-8 bg-purple-800 text-white text-xs sm:text-sm">
       <div className="max-w-7xl mx-auto h-full px-3 sm:px-4 flex items-center justify-between">
         
         {/* Teléfono */}

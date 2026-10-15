@@ -33,7 +33,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="max-w-sm mx-auto px-4 pt-36 md:pt-32 pb-10">
+    <div className="max-w-sm mx-auto px-4 pt-16 pb-10">
       <h1 className="text-2xl font-bold text-center mb-8">
         Acceso administrador
       </h1>

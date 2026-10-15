@@ -55,7 +55,7 @@ const Contacto = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 pt-24 pb-16">
+    <div className="min-h-screen bg-stone-50 pt-8 pb-16">
 
       {/* Encabezado */}
       <section className="relative text-center px-6 py-10 mx-5 mb-12 rounded-3xl bg-purple-500 shadow-lg overflow-hidden">

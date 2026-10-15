@@ -7,7 +7,7 @@ const RutaProtegida = ({ children }) => {
 
   if (verificando) {
     return (
-      <div className="pt-36 md:pt-24 text-center">
+      <div className="py-16 text-center">
         <p role="status" className="text-gray-500">
           Verificando sesión...
         </p>

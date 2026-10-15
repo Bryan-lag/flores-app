@@ -19,12 +19,15 @@ import AdminLogin from "./pages/admin/Login.jsx";
 import AdminPedidos from "./pages/admin/Pedidos.jsx";
 import RutaProtegida from "./components/RutaProtegida.jsx";
 import TopBar from "./components/TopBar.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 function App() {
   return (
     <>
-      <TopBar />
-      <Navbar />
+      <header className="sticky top-0 z-50">
+        <TopBar />
+        <Navbar />
+      </header>
       <ScrollToTop />
 
 
@@ -51,8 +54,8 @@ function App() {
             </RutaProtegida>
           }
         />
-      
-s      </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
       <Footer />
     </>
