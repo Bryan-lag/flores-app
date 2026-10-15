@@ -1,7 +1,7 @@
 from sqlmodel import Session, select
 
 from database import engine
-from models import Producto
+from models import Producto, DetallePedido
 
 
 productos = [
@@ -15,7 +15,7 @@ productos = [
         "descripcion": "Hermoso ramo de rosas rojas frescas.",
         "precio": 250,
         "categoria": "Ramos",
-        "imagen_url": "https://images.pexels.com/photos/30190588/pexels-photo-30190588.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790822660/pexels-ndumiso-zimu-282936158-36948143.jpg",
         "stock": 10
     },
     {
@@ -23,7 +23,7 @@ productos = [
         "descripcion": "Elegante ramo de tulipanes de colores.",
         "precio": 300,
         "categoria": "Ramos",
-        "imagen_url": "https://images.pexels.com/photos/3612784/pexels-photo-3612784.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790823166/pexels-aaa333-7071555.jpg",
         "stock": 8
     },
     {
@@ -31,23 +31,23 @@ productos = [
         "descripcion": "Combinación de flores frescas para cualquier ocasión.",
         "precio": 200,
         "categoria": "Ramos",
-        "imagen_url": "https://images.pexels.com/photos/20375354/pexels-photo-20375354.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790822543/pexels-rebornfilmes-34318997.jpg",
         "stock": 12
     },
     {
-        "nombre": "Ramo Lirios",
-        "descripcion": "Ramo de lirios blancos de excelente calidad.",
+        "nombre": "Calma Purpura",
+        "descripcion": "Ramo de rosas purpuras de excelente calidad.",
         "precio": 200,
         "categoria": "Ramos",
-        "imagen_url": "https://images.pexels.com/photos/29466625/pexels-photo-29466625.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790913192/descarga_6.jpg",
         "stock": 7
     },
     {
         "nombre": "Ramo Blanco",
-        "descripcion": "Arreglo floral blanco para ocasiones especiales.",
+        "descripcion": "Ramo floral blanco para ocasiones especiales.",
         "precio": 200,
         "categoria": "Ramos",
-        "imagen_url": "https://images.pexels.com/photos/31950130/pexels-photo-31950130.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790823225/pexels-mathilde-12032340.jpg",
         "stock": 9
     },
     {
@@ -55,7 +55,7 @@ productos = [
         "descripcion": "Hermoso ramo de girasoles naturales.",
         "precio": 200,
         "categoria": "Ramos",
-        "imagen_url": "https://images.pexels.com/photos/35524820/pexels-photo-35524820.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790823310/pexels-syd-trgt-335495720-37483804.jpg",
         "stock": 15
     },
 
@@ -69,7 +69,7 @@ productos = [
         "descripcion": "Hermoso arreglo floral para ocasiones especiales.",
         "precio": 250,
         "categoria": "Arreglos",
-        "imagen_url": "https://images.pexels.com/photos/36766847/pexels-photo-36766847.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790824239/pexels-samuel-rodriguez-1597507451-31870268.jpg",
         "stock": 10
     },
     {
@@ -77,7 +77,7 @@ productos = [
         "descripcion": "Elegante arreglo de tulipanes de colores.",
         "precio": 300,
         "categoria": "Arreglos",
-        "imagen_url": "https://images.pexels.com/photos/35130793/pexels-photo-35130793.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790824381/pexels-natalie-bond-320378-15003110.jpg",
         "stock": 8
     },
     {
@@ -85,7 +85,7 @@ productos = [
         "descripcion": "Combinación de flores frescas para cualquier ocasión.",
         "precio": 200,
         "categoria": "Arreglos",
-        "imagen_url": "https://images.pexels.com/photos/33316219/pexels-photo-33316219.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790824456/pexels-shivankesh-31776894.jpg",
         "stock": 12
     },
     {
@@ -93,7 +93,7 @@ productos = [
         "descripcion": "Arreglo de lirios blancos de excelente calidad.",
         "precio": 200,
         "categoria": "Arreglos",
-        "imagen_url": "https://images.pexels.com/photos/37182584/pexels-photo-37182584.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790824505/pexels-anna-nekrashevich-7815234.jpg",
         "stock": 7
     },
     {
@@ -101,7 +101,7 @@ productos = [
         "descripcion": "Arreglo floral blanco para ocasiones especiales.",
         "precio": 200,
         "categoria": "Arreglos",
-        "imagen_url": "https://images.pexels.com/photos/31505803/pexels-photo-31505803.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790824551/pexels-palomalimafotos-37606476.jpg",
         "stock": 9
     },
     {
@@ -109,7 +109,7 @@ productos = [
         "descripcion": "Hermoso arreglo de girasoles naturales.",
         "precio": 200,
         "categoria": "Arreglos",
-        "imagen_url": "https://images.pexels.com/photos/18532008/pexels-photo-18532008.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790821868/pexels-planka-26125615.jpg",
         "stock": 15
     },
 
@@ -123,7 +123,7 @@ productos = [
         "descripcion": "Elegante corona floral roja para honrar y recordar a un ser querido.",
         "precio": 250,
         "categoria": "Funebres",
-        "imagen_url": "https://images.pexels.com/photos/33327027/pexels-photo-33327027.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790909497/descarga_3.jpg",
         "stock": 10
     },
     {
@@ -131,7 +131,7 @@ productos = [
         "descripcion": "Hermosa corona de tulipanes para expresar respeto y condolencias.",
         "precio": 300,
         "categoria": "Funebres",
-        "imagen_url": "https://images.pexels.com/photos/31624870/pexels-photo-31624870.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790908952/descarga_1.jpg",
         "stock": 8
     },
     {
@@ -139,7 +139,7 @@ productos = [
         "descripcion": "Corona floral mixta en tonos elegantes para ocasiones de condolencia.",
         "precio": 200,
         "categoria": "Funebres",
-        "imagen_url": "https://images.pexels.com/photos/14838568/pexels-photo-14838568.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790908811/descarga.jpg",
         "stock": 12
     },
     {
@@ -147,7 +147,7 @@ productos = [
         "descripcion": "Corona de lirios blancos de elegante presentación para expresar condolencias.",
         "precio": 200,
         "categoria": "Funebres",
-        "imagen_url": "https://images.pexels.com/photos/1033141/pexels-photo-1033141.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790909037/Serenity_Wreath.jpg",
         "stock": 7
     },
     {
@@ -155,7 +155,7 @@ productos = [
         "descripcion": "Corona floral blanca de estilo sobrio para homenajes y servicios funerarios.",
         "precio": 200,
         "categoria": "Funebres",
-        "imagen_url": "https://images.pexels.com/photos/273941/pexels-photo-273941.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790909119/descarga_2.jpg",
         "stock": 9
     },
     {
@@ -163,7 +163,7 @@ productos = [
         "descripcion": "Hermosa corona de girasoles naturales para rendir homenaje a un ser querido.",
         "precio": 200,
         "categoria": "Funebres",
-        "imagen_url": "https://images.pexels.com/photos/1562262/pexels-photo-1562262.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790909209/Sunflowers_wreath.jpg",
         "stock": 15
     },
 
@@ -173,51 +173,51 @@ productos = [
     # ======================
 
     {
-        "nombre": "Decoración Floral Romántica",
-        "descripcion": "Composición de rosas rojas ideal para bodas, aniversarios y celebraciones románticas.",
+        "nombre": "Decoración de Cumpleaños",
+        "descripcion": "Composición de globos ideal para bodas, aniversarios y celebraciones románticas.",
         "precio": 250,
         "categoria": "Eventos",
-        "imagen_url": "https://images.pexels.com/photos/14457438/pexels-photo-14457438.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790911491/EL_PRIMER_CUMPLEA%C3%91OS_MERECE_UNA_DECORACI%C3%93N_INOLVIDABLE___El_primer_a%C3%B1ito_es_un_momento_%C3%BAnico_que_merece_fotos_hermosas_y_recuerd.jpg",
         "stock": 15
     },
     {
-        "nombre": "Decoración de Tulipanes",
-        "descripcion": "Elegante composición de tulipanes para decorar bodas, recepciones y eventos especiales.",
-        "precio": 300,
+        "nombre": "Decoración de Gala",
+        "descripcion": "Alegre decoración ideal para eventos especiales y recepciones elegantes.",
+        "precio": 200,
         "categoria": "Eventos",
-        "imagen_url": "https://images.pexels.com/photos/1682473/pexels-photo-1682473.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790911604/pexels-bertellifotografia-16935897.jpg",
         "stock": 4
     },
     {
-        "nombre": "Centro Floral Mixto",
-        "descripcion": "Arreglo de flores variadas diseñado para mesas y espacios de celebraciones especiales.",
+        "nombre": "Decoracion Romantica",
+        "descripcion": "Decoración romántica ideal para ocasiones especiales y aniversarios.",
         "precio": 200,
         "categoria": "Eventos",
-        "imagen_url": "https://images.pexels.com/photos/11474201/pexels-photo-11474201.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790911861/descarga_4.jpg",
         "stock": 6
     },
     {
-        "nombre": "Decoración Floral con Lirios",
-        "descripcion": "Elegante composición de lirios para ambientar bodas, ceremonias y eventos formales.",
+        "nombre": "Decoración de Bodas",
+        "descripcion": "Decoración floral elegante para bodas, ceremonias y recepciones.",
         "precio": 200,
         "categoria": "Eventos",
-        "imagen_url": "https://images.pexels.com/photos/11282245/pexels-photo-11282245.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790912244/descarga_5.jpg",
         "stock": 10
     },
     {
-        "nombre": "Montaje Floral Blanco",
-        "descripcion": "Decoración floral en tonos blancos ideal para bodas, sesiones fotográficas y celebraciones elegantes.",
+        "nombre": "Baby Shower",
+        "descripcion": "Decoración especial para baby showers, ide perfecta para celebrar el nacimiento de un bebé.",
         "precio": 200,
         "categoria": "Eventos",
-        "imagen_url": "https://images.pexels.com/photos/37058552/pexels-photo-37058552.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790912429/pexels-th2city-30484893.jpg",
         "stock": 8
     },
     {
-        "nombre": "Decoración de Girasoles",
-        "descripcion": "Alegre composición de girasoles para decorar celebraciones, fiestas y eventos al aire libre.",
+        "nombre": "Graduación",
+        "descripcion": "Decoración ideal para fiestas de graduación, perfecta para celebrar el logro académico.",
         "precio": 200,
         "categoria": "Eventos",
-        "imagen_url": "https://images.pexels.com/photos/5610373/pexels-photo-5610373.jpeg",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1790912549/Ideas_de_decoraci%C3%B3n_para_una_fiesta_de_egresados_-_Todo_Bonito.jpg",
         "stock": 12
     },
 
@@ -232,15 +232,15 @@ productos = [
         "descripcion": "Hermoso ramo de rosas para celebrar un cumpleaños de manera especial.",
         "precio": 250,
         "categoria": "Cumpleaños",
-        "imagen_url": "https://images.pexels.com/photos/20287355/pexels-photo-20287355.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791509214/pexels-rehman-yousaf-321165099-30319663.jpg",
         "stock": 10
     },
     {
-        "nombre": "Ramo Cumpleaños Tulipanes",
-        "descripcion": "Colorido ramo de tulipanes ideal para sorprender en un cumpleaños.",
+        "nombre": "Ramo  Alegria",
+        "descripcion": "Colorido ramo de flores ideal para sorprender en un cumpleaños.",
         "precio": 300,
         "categoria": "Cumpleaños",
-        "imagen_url": "https://images.pexels.com/photos/36913552/pexels-photo-36913552.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791509287/pexels-mine-demirkurt-333081233-32091259.jpg",
         "stock": 8
     },
     {
@@ -248,31 +248,31 @@ productos = [
         "descripcion": "Alegre combinación de flores frescas perfecta para celebrar un cumpleaños.",
         "precio": 200,
         "categoria": "Cumpleaños",
-        "imagen_url": "https://images.pexels.com/photos/34990297/pexels-photo-34990297.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791509390/pexels-samuel-rodriguez-1597507451-31870262.jpg",
         "stock": 12
     },
     {
-        "nombre": "Arreglo Cumpleaños Blanco",
-        "descripcion": "Elegante arreglo floral para regalar y celebrar un cumpleaños especial.",
+        "nombre": "Ramo Cumpleaños Blanco",
+        "descripcion": "Elegante ramo floral para regalar y celebrar un cumpleaños especial.",
         "precio": 250,
         "categoria": "Cumpleaños",
-        "imagen_url": "https://images.pexels.com/photos/6022921/pexels-photo-6022921.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791509454/pexels-ivan-s-7910902.jpg",
         "stock": 9
     },
     {
-        "nombre": "Arreglo Cumpleaños Girasoles",
-        "descripcion": "Alegre arreglo de girasoles para llenar de color una celebración de cumpleaños.",
+        "nombre": "Ramo Cumpleaños Girasoles",
+        "descripcion": "Alegre ramo de girasoles para llenar de color una celebración de cumpleaños.",
         "precio": 250,
         "categoria": "Cumpleaños",
-        "imagen_url": "https://images.pexels.com/photos/14338854/pexels-photo-14338854.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791509550/Sunshine_Charm_Bouquet___Aesthetic_Sunflower_Bouquet_Idea.jpg",
         "stock": 15
     },
     {
-        "nombre": "Arreglo Cumpleaños Especial",
-        "descripcion": "Hermoso arreglo floral diseñado para sorprender en un cumpleaños.",
+        "nombre": "Ramo Cumpleaños Especial",
+        "descripcion": "Hermoso ramo floral diseñado para sorprender en un cumpleaños.",
         "precio": 300,
         "categoria": "Cumpleaños",
-        "imagen_url": "https://images.pexels.com/photos/35353004/pexels-photo-35353004.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791509589/pexels-manie-rehman-yousaf-1532118890-36352069.jpg",
         "stock": 10
     },
 
@@ -286,7 +286,7 @@ productos = [
         "descripcion": "Ramo de rosas rojas ideal para celebrar el amor y un aniversario especial.",
         "precio": 300,
         "categoria": "Aniversario",
-        "imagen_url": "https://images.pexels.com/photos/11166470/pexels-photo-11166470.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791509917/descarga_7.jpg",
         "stock": 10
     },
     {
@@ -294,7 +294,7 @@ productos = [
         "descripcion": "Elegante ramo de tulipanes para celebrar un aniversario lleno de amor.",
         "precio": 320,
         "categoria": "Aniversario",
-        "imagen_url": "https://images.pexels.com/photos/36311955/pexels-photo-36311955.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791509785/Pink_White_Tulips_Flower_Bouquet_.jpg",
         "stock": 8
     },
     {
@@ -302,7 +302,7 @@ productos = [
         "descripcion": "Delicada combinación de flores frescas para celebrar una fecha especial en pareja.",
         "precio": 280,
         "categoria": "Aniversario",
-        "imagen_url": "https://images.pexels.com/photos/20440303/pexels-photo-20440303.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791512642/pexels-ladyhelga-26083404.jpg",
         "stock": 12
     },
     {
@@ -310,7 +310,7 @@ productos = [
         "descripcion": "Romántico arreglo floral ideal para expresar amor y celebrar un aniversario.",
         "precio": 350,
         "categoria": "Aniversario",
-        "imagen_url": "https://images.pexels.com/photos/10720159/pexels-photo-10720159.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791512781/Roses.jpg",
         "stock": 10
     },
     {
@@ -318,7 +318,7 @@ productos = [
         "descripcion": "Elegante arreglo de flores blancas para celebrar una fecha inolvidable.",
         "precio": 300,
         "categoria": "Aniversario",
-        "imagen_url": "https://images.pexels.com/photos/10980026/pexels-photo-10980026.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791512900/x100.jpg",
         "stock": 9
     },
     {
@@ -326,7 +326,7 @@ productos = [
         "descripcion": "Hermoso arreglo floral preparado para celebrar el amor y los momentos compartidos.",
         "precio": 350,
         "categoria": "Aniversario",
-        "imagen_url": "https://images.pexels.com/photos/18808491/pexels-photo-18808491.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791513049/descarga_8.jpg",
         "stock": 10
     },
 
@@ -340,7 +340,7 @@ productos = [
         "descripcion": "Hermoso ramo de flores para celebrar una amistad especial.",
         "precio": 250,
         "categoria": "Amistad",
-        "imagen_url": "https://images.pexels.com/photos/6381186/pexels-photo-6381186.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791513170/Pink_Muse_thepinkmuse_on_X.jpg",
         "stock": 10
     },
     {
@@ -348,7 +348,7 @@ productos = [
         "descripcion": "Alegre ramo de flores de colores para sorprender a un amigo o amiga.",
         "precio": 280,
         "categoria": "Amistad",
-        "imagen_url": "https://images.pexels.com/photos/18480455/pexels-photo-18480455.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791513251/Ramo_de_flores.jpg",
         "stock": 12
     },
     {
@@ -356,7 +356,7 @@ productos = [
         "descripcion": "Colorido ramo de tulipanes perfecto para demostrar cariño y amistad.",
         "precio": 300,
         "categoria": "Amistad",
-        "imagen_url": "https://images.pexels.com/photos/36477472/pexels-photo-36477472.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791513317/descarga_9.jpg",
         "stock": 8
     },
     {
@@ -364,7 +364,7 @@ productos = [
         "descripcion": "Alegre arreglo de girasoles para regalar a una persona especial.",
         "precio": 250,
         "categoria": "Amistad",
-        "imagen_url": "https://images.pexels.com/photos/22674129/pexels-photo-22674129.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791513374/descarga_10.jpg",
         "stock": 15
     },
     {
@@ -372,7 +372,7 @@ productos = [
         "descripcion": "Hermosa combinación de flores frescas para celebrar una gran amistad.",
         "precio": 250,
         "categoria": "Amistad",
-        "imagen_url": "https://images.pexels.com/photos/36865667/pexels-photo-36865667.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791513449/descarga_11.jpg",
         "stock": 12
     },
     {
@@ -380,21 +380,83 @@ productos = [
         "descripcion": "Elegante arreglo floral para demostrar aprecio y cariño a un amigo o amiga.",
         "precio": 300,
         "categoria": "Amistad",
-        "imagen_url": "https://images.pexels.com/photos/31995149/pexels-photo-31995149.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "imagen_url": "https://res.cloudinary.com/c5pevdyi/image/upload/v1791513508/descarga_12.jpg",
         "stock": 10
     }
 
 ]
 
 
-# ======================
 # CARGAR PRODUCTOS
-# ======================
+
 
 with Session(engine) as session:
 
+   
+    # LIMPIAR PRODUCTOS ANTIGUOS 
+
+    # Obtener todas las categorías utilizadas actualmente en el seed
+    categorias_seed = {
+        producto["categoria"]
+        for producto in productos
+    }
+
+    # Obtener todos los productos actuales de la base de datos
+    productos_actuales = session.exec(
+        select(Producto)
+    ).all()
+
+    for producto_actual in productos_actuales:
+
+        # Verificar si existe en el seed un producto
+        # con el mismo nombre y categoría
+        existe_en_seed = any(
+            producto["nombre"] == producto_actual.nombre
+            and producto["categoria"] == producto_actual.categoria
+            for producto in productos
+        )
+
+        # Si pertenece a una categoría administrada por el seed
+        # pero ya no existe en el seed, lo eliminamos.
+        if (
+            producto_actual.categoria in categorias_seed
+            and not existe_en_seed
+        ):
+
+            # Verificar si el producto ya fue utilizado
+            # en algún pedido
+            detalle_existente = session.exec(
+                select(DetallePedido).where(
+                    DetallePedido.producto_id == producto_actual.id
+                )
+            ).first()
+
+            if detalle_existente:
+
+                # No eliminar productos que ya forman parte
+                # del historial de pedidos
+                print(
+                    f"Producto conservado: "
+                    f"'{producto_actual.nombre}' "
+                    f"(ya está asociado a un pedido)."
+                )
+
+            else:
+
+                session.delete(producto_actual)
+
+                print(
+                    f"Producto eliminado: "
+                    f"'{producto_actual.nombre}' "
+                    f"({producto_actual.categoria})"
+                )
+
+
+    # CREAR / ACTUALIZAR PRODUCTOS
+
     for datos in productos:
 
+        # Buscar producto por nombre + categoría
         existente = session.exec(
             select(Producto).where(
                 Producto.nombre == datos["nombre"],
@@ -403,6 +465,8 @@ with Session(engine) as session:
         ).first()
 
         if existente:
+
+            # Actualizar datos del producto existente
             existente.imagen_url = datos["imagen_url"]
             existente.descripcion = datos["descripcion"]
             existente.precio = datos["precio"]
@@ -410,15 +474,27 @@ with Session(engine) as session:
 
             session.add(existente)
 
-            print(f"'{datos['nombre']}' actualizado.")
+            print(
+                f"'{datos['nombre']}' actualizado."
+            )
 
         else:
+
+            # Crear producto nuevo
             producto = Producto(**datos)
+
             session.add(producto)
 
-            print(f"'{datos['nombre']}' creado.")
+            print(
+                f"'{datos['nombre']}' creado."
+            )
+
+
+    # GUARDAR CAMBIOS
 
     session.commit()
 
 
 print("Productos cargados correctamente.")
+
+        
