@@ -20,6 +20,7 @@ import AdminPedidos from "./pages/admin/Pedidos.jsx";
 import RutaProtegida from "./components/RutaProtegida.jsx";
 import TopBar from "./components/TopBar.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import Rastreo from "./pages/Rastreo.jsx";
 
 function App() {
   return (
@@ -45,7 +46,8 @@ function App() {
         <Route path="/ocasiones/:ocasion" element={<OcasionesProductos/>} />
         <Route path="/productos/:id" element={<ProductoDetalle />} />
         <Route path="/checkout" element={<Checkout />} />
-                <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/rastreo" element={<Rastreo />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin/pedidos"
           element={

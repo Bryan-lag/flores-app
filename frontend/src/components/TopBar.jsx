@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 
 const TopBar = () => {
   return (
@@ -16,12 +16,13 @@ const TopBar = () => {
        </a>
 
         {/* Rastrear pedido */}
-        <a
-          href="/rastreo"
+    
+        <Link
+          to="/rastreo"
           className="hover:text-purple-100 transition"
         >
           📦 Rastrear pedido
-        </a>
+        </Link>
 
       </div>
     </div>
