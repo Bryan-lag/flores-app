@@ -42,8 +42,9 @@ const FlorCarrusel = () => {
             </div>
 
             {/* Información */}
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-black/30 backdrop-blur-md px-4 py-2 rounded-xl text-white text-center max-w-[80%]">
-                <h2 className="font-serif font-semibold text-lg">
+                
+            <div className="absolute bottom-10 sm:bottom-16 left-1/2 -translate-x-1/2 bg-black/30 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-white text-center max-w-[85%] sm:max-w-[80%]">
+                <h2 className="font-serif font-semibold text-sm sm:text-base md:text-lg leading-snug">
                     {productos[index].nombre}
                 </h2>
             </div>
