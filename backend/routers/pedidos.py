@@ -1,3 +1,5 @@
+import re
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 
@@ -127,6 +129,12 @@ def crear_pedido(
         "total": total
     }
     
+
+def _solo_digitos(texto: str) -> str:
+    """Quita todo lo que no sea número, para comparar teléfonos sin
+    importar si llevan espacios o guiones distintos."""
+    return re.sub(r"\D", "", texto or "")
+    
     
 def _pedido_a_read(session: Session, pedido: Pedido) -> PedidoRead:
     """Arma un PedidoRead con el nombre de cada producto del detalle."""
@@ -158,6 +166,29 @@ def _pedido_a_read(session: Session, pedido: Pedido) -> PedidoRead:
         estado=pedido.estado,
         detalles=items,
     )
+
+
+@router.get("/rastreo", response_model=PedidoRead)
+def rastrear_pedido(
+    pedido_id: int,
+    telefono: str,
+    session: Session = Depends(get_session),
+):
+    """
+    Consulta pública de un pedido por su número + el teléfono con el
+    que se hizo. No requiere sesión de administrador, pero exige ambos
+    datos para que nadie pueda ver pedidos ajenos solo adivinando
+    números consecutivos.
+    """
+    pedido = session.get(Pedido, pedido_id)
+
+    if not pedido or _solo_digitos(pedido.telefono) != _solo_digitos(telefono):
+        raise HTTPException(
+            status_code=404,
+            detail="No encontramos un pedido con ese número y teléfono"
+        )
+
+    return _pedido_a_read(session, pedido)
 
 
 @router.get("/", response_model=list[PedidoRead])
