@@ -26,7 +26,7 @@ const Home = () => {
 
 
         {/* HERO CONTENT */}
-        <section className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-screen max-w-6xl mx-auto px-4 md:px-8 pt-24">
+        <section className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-screen max-w-6xl mx-auto px-4 md:px-8 ">
 
           {/* DETALLES */}
           <div className="w-full md:w-1/2 order-2 md:order-1">
