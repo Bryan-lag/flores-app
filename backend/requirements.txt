@@ -1,8 +1,9 @@
-fastapi
-uvicorn[standard]
-sqlmodel
-psycopg2-binary
-alembic
-python-dotenv
-bcrypt
-pyjwt
+fastapi==0.143.2
+uvicorn[standard]==0.54.0
+sqlmodel==0.0.48
+SQLAlchemy==2.1.4
+psycopg2-binary==2.9.13
+alembic==1.20.0
+python-dotenv==1.2.4
+bcrypt==5.0.0
+pyjwt==2.15.1

@@ -16,6 +16,10 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise RuntimeError("No existe DATABASE_URL en el archivo .env")
 
+# forzamos psycopg2 para que funcione con cualquiera de los dos formatos.
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg2://", 1)
+
 
 # echo=True imprime cada consulta SQL en la consola. Útil al depurar,
 # ruidoso en producción: se activa solo si SQL_ECHO=true en el .env.
