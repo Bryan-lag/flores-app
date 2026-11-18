@@ -10,9 +10,9 @@ const CardProducto = ({ producto, agregarAlCarrito }) => {
         {/* Imagen */}
         <div className="w-full h-64 bg-gray-100 flex items-center justify-center overflow-hidden">
           <ImagenProducto
-            src={producto.imagen_url}
-            alt={producto.nombre}
-            className="w-full h-40 sm:h-48 md:h-56 object-cover hover:scale-105 transition-transform duration-300"
+              src={producto.imagen_url}
+              alt={producto.nombre}
+              className="w-full h-40 sm:h-48 md:h-56 object-cover hover:scale-105 transition-transform duration-300"
           />
         </div>
 

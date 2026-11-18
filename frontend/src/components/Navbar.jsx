@@ -37,13 +37,13 @@ const Navbar = () => {
 
         {/* LOGO */}
         <Link to="/" onClick={() => setOpen(false)} className="shrink-0">
-          <h1 className="text-2xl md:text-3xl font-serif font-bold text-purple-800 cursor-pointer hover:text-yellow-600 transition">
+          <p className="text-2xl md:text-3xl font-serif font-bold text-purple-800 cursor-pointer hover:text-yellow-600 transition">
             TULIPA
-          </h1>
+          </p>
         </Link>
 
         {/* BUSCADOR DESKTOP */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8 min-w-0">
+        <div className="hidden lg:flex flex-1 max-w-md mx-2 lg:mx-8 min-w-0">
 
           <input
             type="text"
@@ -51,12 +51,12 @@ const Navbar = () => {
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             onKeyDown={manejarEnter}
-            className="min-w-0 flex-1 px-4 py-2 rounded-l-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/90"
+            className="min-w-0 flex-1 w-full px-3 lg:px-4 py-2 text-sm lg:text-base rounded-l-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white/90"
           />
 
           <button
             onClick={buscarProductos}
-            className="shrink-0 bg-purple-500 text-white px-4 py-2 rounded-r-xl hover:bg-purple-600 transition cursor-pointer"
+            className="shrink-0 whitespace-nowrap bg-purple-500 text-white px-2 lg:px-4 py-2 text-sm lg:text-base rounded-r-xl hover:bg-purple-600 transition cursor-pointer"
           >
             Buscar
           </button>
@@ -64,9 +64,9 @@ const Navbar = () => {
         </div>
 
         {/* DESKTOP */}
-        <div className="hidden md:flex items-center gap-6 shrink-0">
+        <div className="hidden lg:flex items-center gap-2 lg:gap-6 shrink-0">
 
-          <ul className="flex gap-6 text-purple-800 font-serif">
+          <ul className="flex gap-2 lg:gap-6 text-purple-800 font-serif text-sm lg:text-base whitespace-nowrap">
 
             <li>
               <Link to="/">Inicio</Link>
@@ -198,7 +198,7 @@ const Navbar = () => {
 
         {/* HAMBURGUESA */}
         <button
-          className="md:hidden shrink-0 text-purple-800 text-3xl cursor-pointer"
+          className="lg:hidden shrink-0 text-purple-800 text-3xl cursor-pointer"
           onClick={() => setOpen(!open)}
           aria-label="Abrir menú"
         >
@@ -208,7 +208,7 @@ const Navbar = () => {
       </div>
 
       {/* BUSCADOR MÓVIL */}
-      <div className="md:hidden w-full px-4 pb-3 ">
+      <div className="lg:hidden w-full px-4 pb-3 ">
 
         <div className="w-full flex min-w-0">
 
@@ -234,7 +234,7 @@ const Navbar = () => {
 
       {/* MENÚ MÓVIL */}
       {open && (
-        <div className="md:hidden bg-purple-100/80 backdrop-blur-md border-t border-white/30 shadow-inner px-4 pb-5 max-h-[calc(100vh-120px)] overflow-y-auto">
+        <div className="lg:hidden bg-purple-100/80 backdrop-blur-md border-t border-white/30 shadow-inner px-4 pb-5 max-h-[calc(100vh-120px)] overflow-y-auto">
 
           <ul className="flex flex-col gap-4 text-purple-800 font-serif pt-4">
 

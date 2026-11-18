@@ -2,16 +2,9 @@ import { useEffect, useState } from "react";
 import { obtenerPedidos, actualizarEstadoPedido } from "../../api/admin";
 import { useAdmin } from "../../context/AdminContext";
 import EstadoCarga from "../../components/EstadoCarga";
+import { ESTADOS, ETIQUETA_ESTADO } from "../../constants/estados";
 
-const ESTADOS = ["pendiente", "confirmado", "en_camino", "entregado", "cancelado"];
 
-const ETIQUETA_ESTADO = {
-  pendiente: "Pendiente",
-  confirmado: "Confirmado",
-  en_camino: "En camino",
-  entregado: "Entregado",
-  cancelado: "Cancelado",
-};
 
 const AdminPedidos = () => {
 

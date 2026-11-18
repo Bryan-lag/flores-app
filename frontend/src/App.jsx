@@ -1,4 +1,4 @@
-import FlorCarrusel from "./components/FlorCarrusel.jsx";
+
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
@@ -25,10 +25,12 @@ import Rastreo from "./pages/Rastreo.jsx";
 function App() {
   return (
     <>
+      <TopBar />
+
       <header className="sticky top-0 z-50">
-        <TopBar />
         <Navbar />
       </header>
+      
       <ScrollToTop />
 
 
@@ -38,7 +40,6 @@ function App() {
         <Route path="/funebre" element={<Funebre />} />
         <Route path="/arreglos" element={<Arreglos />} />
         <Route path="/eventos" element={<Eventos />} />
-        <Route path="/flor-carrusel" element={<FlorCarrusel />} />
         <Route path="/carrito" element={<Carrito/>} />
         <Route path="/catalogo" element={<Catalogo/>} />
         <Route path="/contacto" element={<Contacto/>} />
